@@ -1,0 +1,11 @@
+.padding-5 {
+   padding: 5px !important;
+}
+.title-collapse{
+    white-space: nowrap;
+    width: 8em;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-height: 2.6em;
+    font-weight: bold;
+}
