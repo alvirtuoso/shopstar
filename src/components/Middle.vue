@@ -13,7 +13,6 @@
 
 import {fromPromise} from 'rxjs/observable/fromPromise';
 import {from} from 'rxjs/observable/from';
-var proxy = require('http-proxy-middleware');
 
   const msgObservable = from(
     ['Hi HEllo there msgObservable']

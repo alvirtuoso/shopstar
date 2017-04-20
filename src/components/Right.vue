@@ -15,23 +15,25 @@
 <script>
 var parseString = require('xml2js').parseString;
 import AmazonSvc from '../services/AmazonSvc';
+import Mixin from '../helpers/mixin.js';
+
   export default {
     name: 'right',
+    mixins: [Mixin],
     created(){
-      var xml = "<bookstore><book>" +
-              "<title>Everyday Italian</title>" +
-              "<author><first>Giada</first> <last>De Laurentiis</last></author>" +
-              "<year>2005</year>" +
-              "</book></bookstore>";
-      parseString(xml, function (err, result) {
-          console.dir(result.bookstore.book[0].author[0].first[0]);
-      });
 
+      this.foo(); // mixin method
       this.fetchItems();
     },
     methods:{
       fetchItems(){
-         AmazonSvc.getXmlRequest().subscribe(resp => {console.log(resp.data)})
+         AmazonSvc.getXmlRequest().subscribe(resp => {
+            parseString(resp.data, function(err, result){
+              console.log(result.ItemSearchResponse.Items[0].Item[0].ItemAttributes[0].Title[0]);
+              var amtText = result.ItemSearchResponse.Items[0].Item[0].ItemAttributes[0].ListPrice[0].FormattedPrice[0];
+              console.log(amtText)
+            })
+         })
         //console.log("hello")
       }
     }

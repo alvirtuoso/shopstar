@@ -1,0 +1,18 @@
+**************** Regex ***************************
+// matches "n or nn or nnnnn customer reviews" regex
+/[0-9]{1,9}\s(customer reviews)\b/g
+
+// matches n or n.n of 5 stars
+[0-9](\.[0-9])?\s(out of 5 stars)\b
+
+***************** async component ***************
+You don't make a component async in the vue file, but in the place where you require the vue file:
+
+Vue.component('async-webpack-example', function (resolve) {
+  // This special require syntax will instruct Webpack to
+  // automatically split your built code into bundles which
+  // are loaded over Ajax requests.
+  require(['./my-async-component.vue'], resolve)
+})
+
+*******************  ***************

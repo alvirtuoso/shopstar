@@ -17,6 +17,7 @@ export default {
     },
     change(myUrl) {
         return myUrl = myUrl.replace(re, "$1" + encodeURIComponent(value));
-    }
+    },
+    
 
 }
