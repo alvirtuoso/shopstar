@@ -1,6 +1,25 @@
 <template>
 <div class="row">
-  <div class="col-sm-3 padding-5">
+
+  <div class="col-sm-3 padding-5" v-for="item in items">
+    <div class="card">
+      <img class="card-img-top" style="width:160px; height:160px" :src= "item.urlMediumImage" :alt="item.title">
+      <div class="card-block padding-5">
+        <div class="title-collapse">
+           <b-popover :placement="'top'" :triggers="['hover']">
+             
+              <div class="title-collapse">
+                   <a href="#">{{item.title}}</a>
+              </div>
+                <span slot="content">{{item.title}} </span>  
+           </b-popover>          
+          
+        </div>
+      </div>
+    </div>
+  </div>
+
+ <div class="col-sm-3 padding-5">
     <div class="card">
       <img class="card-img-top" src="//placehold.it/200" alt="Card image">
       <div class="card-block padding-5">
@@ -13,24 +32,32 @@
       </div>
     </div>
   </div>
-  <div class="col-sm-3 padding-5">
-    <div class="card">
-      <img class="card-img-top" src="//placehold.it/200" alt="Card image">
-      <div class="card-block padding-5">
-        <div class="title-collapse">
-            <a href="#">Button ere some title supposed to be title supposed to be over there and here is not ok to title thi</a>
-        </div>
-        <div class="small">312 Reviews</div>
-      </div>
-    </div>
-  </div>
 
 </div>
 </template>
 
 <script>
+import AmazonSvc from '../services/AmazonSvc';
+
 export default{
-    name:'card-list'
+    name:'card-list',
+    data: function(){
+      return {
+        items: [],
+        keywords:''
+      }
+    },
+    mounted(){
+      this.fetchItems();
+    },
+    methods:{
+      fetchItems(){
+        AmazonSvc.geItemsRequest(this.keywords).subscribe(
+          resp => {            
+            this.items = resp.data;
+          });
+      }
+    }
 }
 </script>
 
@@ -66,7 +93,7 @@ export default{
   position: absolute;
   bottom: 0;
   right: 5px;
-  padding: 0 1.2em;
+  //padding: 0 1.2em;
   background: inherit;
 }
 .title-collapse span:after {

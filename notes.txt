@@ -15,4 +15,7 @@ Vue.component('async-webpack-example', function (resolve) {
   require(['./my-async-component.vue'], resolve)
 })
 
-*******************  ***************
+******************* Amazon Sort parameters  ***************
+'psrank','salesrank','price','-price','titlerank'
+salesrank = Bestseller
+psrank = Bestseller taking into consideration projected sales

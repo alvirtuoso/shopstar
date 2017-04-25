@@ -1,6 +1,11 @@
 <template>
 <footer class="footer">
     <div class="container">
+    <div class="row">
+        <div class="col-md6">
+        <ave-review url="hello boy"></ave-review>
+        </div>
+    </div>
         <div class="row">
             <div class="col-md-5">
                 <h5><i class="fa fa-road"></i> Amazon45.</h5>

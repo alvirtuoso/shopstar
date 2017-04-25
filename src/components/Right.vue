@@ -13,13 +13,16 @@
 </template>
 
 <script>
-var parseString = require('xml2js').parseString;
+// var parseString = require('xml2js').parseString;
 import AmazonSvc from '../services/AmazonSvc';
 import Mixin from '../helpers/mixin.js';
 
   export default {
     name: 'right',
     mixins: [Mixin],
+    // data:{
+    //   url: 'someurl.com'
+    // },
     created(){
 
       this.foo(); // mixin method
@@ -27,13 +30,9 @@ import Mixin from '../helpers/mixin.js';
     },
     methods:{
       fetchItems(){
-         AmazonSvc.getXmlRequest().subscribe(resp => {
-            parseString(resp.data, function(err, result){
-              console.log(result.ItemSearchResponse.Items[0].Item[0].ItemAttributes[0].Title[0]);
-              var amtText = result.ItemSearchResponse.Items[0].Item[0].ItemAttributes[0].ListPrice[0].FormattedPrice[0];
-              console.log(amtText)
-            })
-         })
+        //  AmazonSvc.getXmlRequest(url).subscribe(resp => {
+
+        //  })
         //console.log("hello")
       }
     }

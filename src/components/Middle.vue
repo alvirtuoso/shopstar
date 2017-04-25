@@ -1,15 +1,12 @@
 <template>
 
 <div class="col-md-7">
-  
   <card-list></card-list>
 </div>
 
 </template>
 
 <script>
-// import axios from 'axios'
-
 
 import {fromPromise} from 'rxjs/observable/fromPromise';
 import {from} from 'rxjs/observable/from';

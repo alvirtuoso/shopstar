@@ -29,19 +29,15 @@ module.exports = {
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
     proxyTable: {
-        '/api/**': {
-            target: 'http://webservices.amazon.com', 
-            // target: 'https://jsonplaceholder.typicode.com',
-            // secure: true,
-            changeOrigin: true,
-            pathRewrite: {
-             '^/api': ''
-            }
-        }//,
-        // '/images': {
-        //     target: 'http://localhost:8080',
-        //     changeOrigin: true
-        // }      
+        // '/api/**': {
+        //     target: 'http://webservices.amazon.com', 
+        //     // target: 'https://jsonplaceholder.typicode.com',
+        //     // secure: true,
+        //     changeOrigin: true,
+        //     pathRewrite: {
+        //      '^/api': ''
+        //     }
+        // }
     },
     // CSS Sourcemaps off by default because relative paths are "buggy"
     // with this option, according to the CSS-Loader README
