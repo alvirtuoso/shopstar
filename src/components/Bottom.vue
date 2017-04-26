@@ -3,7 +3,6 @@
     <div class="container">
     <div class="row">
         <div class="col-md6">
-        <ave-review url="hello boy"></ave-review>
         </div>
     </div>
         <div class="row">

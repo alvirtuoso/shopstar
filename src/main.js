@@ -11,9 +11,11 @@ import {from} from 'rxjs/observable/from'
 import CardList from './components/CardList'
 import AveReview from './components/AveReview'
 import VueLazyload from 'vue-lazyload'
+import VueLocalStorage from 'vue-localstorage'
 
 Vue.config.productionTip = false;
 
+Vue.use(VueLocalStorage);
 Vue.use(VueRx);
 Vue.use(BootstrapVue);
 Vue.component('card-list', CardList ); // register component globally
@@ -23,11 +25,20 @@ Vue.use(VueLazyload, {
   error: './assets/no_image_available.jpg',
   loading: './assets/cube.gif',
   attempt: 1
-})
+});
 
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
   template: '<App/>',
+    localStorage: {
+
+    someNumber: {
+      type: Number,
+    },
+    searchList: [],
+
+  },
   components: { App }
+
 })

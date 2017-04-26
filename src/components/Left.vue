@@ -20,11 +20,11 @@
             return {
                 msg: 'Hellow World of testing'
             }
-        },
+        },       
         methods: {
             clickMe: function(e){
-                this.msg = "not here"
-                e.preventDefault()
+                this.msg = "not here";
+                e.preventDefault();
 
             }
         }

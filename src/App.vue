@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-
+  
     <nav class="navbar navbar-toggleable-md navbar-light bg-faded">
       <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -14,7 +14,7 @@
 
           <form class="mx-2 my-auto d-inline w-50">
               <div class="input-group">
-                  <input type="text" class="form-control" v-model="keywords" placeholder="Search">
+                  <input id="search-input" type="text" class="form-control" v-model="keywords" placeholder="Search">
                   <span class="input-group-btn">
                   <button class="btn btn-outline-warning" v-on:click="search" type="button">GO</button>
                 </span>
@@ -59,6 +59,7 @@ export default {
   data: function(){
     return{
       itemList: [],
+      searchList: [],
       // itemList: ['one', 'two', 'three'],
       keywords: ''
     }
@@ -69,12 +70,25 @@ export default {
       if (event){
         // this.itemList.push("one");
          event.preventDefault();
-         AmazonSvc.http().get(`thermos`).then(resp => {
-           for(i=0; i<resp.data.length; i++){
-             this.itemList.push(resp.data[i]);
+         AmazonSvc.http().get(this.keywords).then(resp => {
+           console.log('sta', resp.status);
+           if(resp.status == 200){
+
+              // clear the list first.
+               this.itemList.splice(0, this.itemList.length);
+              for(i=0; i<resp.data.length; i++){
+                if(!resp.data[i].urlSmallImage){resp.data[i].urlSmallImage = '/static/img/no_image_available.5304255.jpg';}
+                if(!resp.data[i].urlMediumImage){resp.data[i].urlMediumImage = '/static/img/no_image_available.5304255.jpg';}
+                if(!resp.data[i].urlLargeImage){resp.data[i].urlLargeImage = '/static/img/no_image_available.5304255.jpg';}
+                this.itemList.push(resp.data[i]);            
+              }
            }
-         })
-        // AmazonSvc.geItemsRequest('relumins').subscribe(
+         });
+         this.searchList.push(this.keywords);
+         this.$localStorage.set('searchList', this.searchList);
+         this.someMethod();
+         // // You may use this to get observable
+        // AmazonSvc.geItemsRequest(this.keywords).subscribe(
         //   (resp) => {
         //      for(i=0; i<resp.data.length; i++){
         //         this.itemList.push(resp.data[i]);
@@ -83,16 +97,28 @@ export default {
         // );
         
       }
+    },
+    someMethod () {
+      
+      let lsValue = this.$localStorage.get('searchList');
+      console.log('localStorage: ', lsValue);
     }
   }
 }
 </script>
 
-<style>
+<style scoped>
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;
 }
+
+button {
+  cursor: pointer !important;
+}
+
+
+
 </style>
