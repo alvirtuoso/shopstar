@@ -1,7 +1,9 @@
 <template>
 
 <div class="col-md-7">
-  <card-list></card-list>
+
+  <card-list :items="itemList"></card-list>
+<h2>{{this.itemList[0].title}}</h2>
 </div>
 
 </template>
@@ -20,19 +22,17 @@ export default {
   subscriptions: {
       m$: msgObservable
     },
+  props:['items'],
   data () {
     return {
+      itemList: this.items,
       msg: [],
       ob: {}
     }
   },
-  created: function(){
-    //http://webservices.amazon.com/onca/xml?AWSAccessKeyId=AKIAJHBDJY4JNUZAPLPQ&AssociateTag=alvirtuoso-20&Keywords=iphone%20plus&Operation=ItemSearch&ResponseGroup=Images%2CItemAttributes%2COffers&SearchIndex=All&Service=AWSECommerceService&Timestamp=2017-04-18T20%3A43%3A10.000Z&Signature=MV%2FHudgDDzTa%2BSsAbQO6Ce44QYW6mbouUg%2FKZh9YPvs%3D
-    var url = 'api/onca/xml?AWSAccessKeyId=AKIAJHBDJY4JNUZAPLPQ&AssociateTag=alvirtuoso-20&Keywords=iphone%20plus&Operation=ItemSearch&ResponseGroup=Images%2CItemAttributes%2COffers&SearchIndex=All&Service=AWSECommerceService&Timestamp=2017-04-18T21%3A19%3A10.000Z&Signature=osCOAPmuYk8augu6ydLLTi1JJUuwNLHfOSF7TpeoJFw%3D';
-    // var url = 'api/users/2'; //'https://jsonplaceholder.typicode.com'
+  mounted: function(){
+      console.log('middle itemLIst data:', this.itemList);
 
-    // this.$http.get(url).then((resp) => {console.log('middelvue created')});
-            
   }
 }
 </script>

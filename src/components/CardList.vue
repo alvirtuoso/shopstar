@@ -1,38 +1,20 @@
 <template>
 <div class="row">
 
-  <div class="col-sm-3 padding-5" v-for="item in items">
+  <div class="col-sm-3" v-for="item in itemList">
     <div class="card">
-      <img class="card-img-top" style="width:160px; height:160px" :src= "item.urlMediumImage" :alt="item.title">
-      <div class="card-block padding-5">
-        <div class="title-collapse">
-           <b-popover :placement="'top'" :triggers="['hover']">
-             
-              <div class="title-collapse">
+        <img class="card-img-top" :src= "item.urlMediumImage" :alt="item.title">
+        <div class="card-block padding-5">
+            <b-popover :placement="'bottom'" :triggers="['hover']">
+              <p class="title-collapse">
                    <a href="#">{{item.title}}</a>
-              </div>
-                <span slot="content">{{item.title}} </span>  
-           </b-popover>          
-          
+              </p>
+                <span slot="content">{{item.title}} </span>
+           </b-popover>
+             <label>34 reviews</label>
         </div>
-      </div>
     </div>
   </div>
-
- <div class="col-sm-3 padding-5">
-    <div class="card">
-      <img class="card-img-top" src="//placehold.it/200" alt="Card image">
-      <div class="card-block padding-5">
-        <b-popover :placement="'bottom'" :triggers="['hover']" content="Button ere some title supposed to be title supposed to be over">
-          <div class="title-collapse">
-              <a href="#">Button ere some title supposed to be title supposed to be over there and here is not ok to title thi</a>
-          </div>
-        </b-popover>
-        <div class="small"><a href="#">35 Reviews</a></div>
-      </div>
-    </div>
-  </div>
-
 </div>
 </template>
 
@@ -41,21 +23,25 @@ import AmazonSvc from '../services/AmazonSvc';
 
 export default{
     name:'card-list',
+    props:['items'],
     data: function(){
       return {
-        items: [],
+        itemList: [],
         keywords:''
       }
     },
     mounted(){
-      this.fetchItems();
+console.log('cardList prop items: ', this.items);
+
     },
     methods:{
       fetchItems(){
-        AmazonSvc.geItemsRequest(this.keywords).subscribe(
-          resp => {            
-            this.items = resp.data;
-          });
+        console.log('cardlist prop searchwords: ', this.searchwords);
+        console.log('cardlist data keywords: ', this.keywords);
+        // AmazonSvc.geItemsRequest(this.keywords).subscribe(
+        //   resp => {
+        //     this.items = resp.data;
+        //   });
       }
     }
 }
@@ -77,7 +63,7 @@ export default{
   -webkit-box-orient: vertical;
   max-height: 50px;
   font-weight: 500;
-  line-height: 1.2em; 
+  line-height: 1.2em;
 }
 
 .title-collapse {
@@ -103,4 +89,5 @@ export default{
   z-index: 1;
 
 }
+
 </style>

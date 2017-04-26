@@ -61,9 +61,7 @@
     export default{
         name:'bottom',
         created(){
-            
-;
-                 
+
                 //var amzxml = new JKL.ParseXML('../assets/xml.xml');
             //     var amzdata = amzxml.parse();
             //     console.log(amzdata.ItemSearchResponse.Items.Item[0].ASIN);
