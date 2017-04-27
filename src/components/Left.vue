@@ -1,14 +1,7 @@
 <template>
   
  <div class="col-md-2">
-
-        <ul>
-		  <li><a href="#">Home</a></li>
-		  <li><a href="#">Responsive</a></li>
-		  <li><a href="#">Layout</a></li>
-		  <li><a href="#">Example</a></li>
-		</ul>
-
+    <b-badge pill variant="success" v-for="word in searchList" :key="word.id">{{word.keyword}}</b-badge>
  </div>
 </template>
 
@@ -18,9 +11,11 @@
         name: 'left',
         data(){
             return {
-                msg: 'Hellow World of testing'
+                msg: 'Hellow World of testing',
+                searchList: this.searchedWords
             }
-        },       
+        },  
+        props:['searchedWords'],     
         methods: {
             clickMe: function(e){
                 this.msg = "not here";

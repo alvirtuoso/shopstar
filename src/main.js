@@ -36,7 +36,7 @@ new Vue({
     someNumber: {
       type: Number,
     },
-    searchList: [],
+    searchedWords: [],
 
   },
   components: { App }

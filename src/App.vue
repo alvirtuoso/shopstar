@@ -26,7 +26,7 @@
     </nav>
 
     <div class="row">
-      <left></left>
+      <left :searchedWords="searchList"></left>
       <middle :items="itemList"></middle>
       <right></right>
     </div>
@@ -44,12 +44,14 @@ import Middle from './components/Middle'
 import Right from './components/Right'
 import Bottom from './components/Bottom'
 import AmazonSvc from './services/AmazonSvc';
+import Mixin from './helpers/mixin.js';
 
 export default {
   name: 'app',
   components: {
     Top, Left, Middle, Right, Bottom
   },
+  mixins: [Mixin],
   created(){
 
   },
@@ -67,8 +69,10 @@ export default {
   methods: {
    search: function(event){
       var i;
+      // this.searchList.splice(0, this.searchList.length);
+      var id = this.guid();
+      this.searchList.push({keyword: this.keywords, id: id});
       if (event){
-        // this.itemList.push("one");
          event.preventDefault();
          AmazonSvc.http().get(this.keywords).then(resp => {
            console.log('sta', resp.status);
@@ -84,9 +88,8 @@ export default {
               }
            }
          });
-         this.searchList.push(this.keywords);
-         this.$localStorage.set('searchList', this.searchList);
-         this.someMethod();
+         this.$localStorage.set('searchedWords', this.searchList);
+
          // // You may use this to get observable
         // AmazonSvc.geItemsRequest(this.keywords).subscribe(
         //   (resp) => {
@@ -97,11 +100,6 @@ export default {
         // );
         
       }
-    },
-    someMethod () {
-      
-      let lsValue = this.$localStorage.get('searchList');
-      console.log('localStorage: ', lsValue);
     }
   }
 }
