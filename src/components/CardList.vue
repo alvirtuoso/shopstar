@@ -14,6 +14,7 @@
              <label>34 reviews</label>
         </div>
     </div>
+
   </div>
 </div>
 </template>
@@ -31,18 +32,11 @@ export default{
       }
     },
     mounted(){
-console.log('cardList prop items: ', this.items);
+// console.log('cardList prop items: ', this.items);
 
     },
     methods:{
-      fetchItems(){
-        console.log('cardlist prop searchwords: ', this.searchwords);
-        console.log('cardlist data keywords: ', this.keywords);
-        // AmazonSvc.geItemsRequest(this.keywords).subscribe(
-        //   resp => {
-        //     this.items = resp.data;
-        //   });
-      }
+
     }
 }
 </script>
@@ -51,7 +45,12 @@ console.log('cardList prop items: ', this.items);
 .padding-5 {
    padding: 5px !important;
 }
-
+.pagination {
+  background-color: yellow;
+}
+.page-item {
+  color: red;
+}
 .text-collapse{
   overflow: hidden;
   text-overflow: -o-ellipsis-lastline;

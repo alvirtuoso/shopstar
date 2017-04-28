@@ -14,18 +14,25 @@ import VueLazyload from 'vue-lazyload';
 import VueLocalStorage from 'vue-localstorage';
 import VueRouter from 'vue-router';
 import Bottom from './components/Bottom'
+import Left from './components/Left'
 import Test from './components/Test'
+import Middle from './components/Middle'
 import '../node_modules/amazon-autocomplete/dist/amazon-autocomplete.min.js'
+import Paginate from 'vuejs-paginate'
+
 Vue.config.productionTip = false;
 
 Vue.use(VueLocalStorage);
 Vue.use(VueRouter);
 Vue.use(VueRx);
 Vue.use(BootstrapVue);
-Vue.component('app', App);
 
+Vue.component('paginate', Paginate)
+Vue.component('app', App);
 Vue.component('bottom', Bottom)      // global registration
 Vue.component('card-list', CardList ); // register component globally
+Vue.component('left', Left);
+Vue.component('middle', Middle);
 
 Vue.component('test', Test);
 Vue.component('ave-review', AveReview);

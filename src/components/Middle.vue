@@ -17,6 +17,19 @@
       </div>
     </div>
  </div>
+ 
+  <div class="row">
+    <paginate 
+    :page-count="5"
+    :page-range="3"
+    :margin-pages="2"
+    :click-handler="pageClick"
+    :prev-text="'Prev'"
+    :next-text="'Next'"
+    :container-class="'pagination'">
+    </paginate>
+  </div>
+
 </div>
 
 </template>
@@ -45,7 +58,11 @@ export default {
   },
   mounted: function(){
       console.log('middle itemLIst data:', this.itemList);
-
+  },
+  methods: {
+      pageClick: function(pageNum) {
+        console.log(pageNum)
+      }
   }
 }
 </script>
@@ -59,6 +76,7 @@ export default {
 img{
   height: 160px;
 }
+
 .title-collapse {
   font-weight: 500;
   height: 40px;
@@ -68,7 +86,7 @@ img{
   margin-bottom: 1em;
 }
 .title-collapse:after {
-  content: '...';
+  // content: '...';
   position: absolute;
   bottom: 0;
   right: 5px;
@@ -78,10 +96,31 @@ img{
 .title-collapse span:after {
   content: '\0000a0';
   position: absolute;
-
   z-index: 1;
 
 }
+
+.pagination {
+    display: inline-block;
+    list-style: none;
+}
+
+.pagination a {
+    color: black;
+    float: left;
+    padding: 8px 16px;
+    text-decoration: none;
+    transition: background-color .3s;
+    border: 1px solid #ddd;
+}
+
+.pagination a.active {
+    background-color: #4CAF50;
+    color: white;
+    border: 1px solid #4CAF50;
+}
+
+.pagination a:hover:not(.active) {background-color: #ddd;}
 
 </style>
 

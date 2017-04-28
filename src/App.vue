@@ -36,15 +36,15 @@
  
 import AmazonSvc from './services/AmazonSvc'
 import Mixin from './helpers/mixin.js'
-import Left from './components/Left'
-import Middle from './components/Middle'
-import Right from './components/Right'
+// import Left from './components/Left'
+// import Middle from './components/Middle'
+// import Right from './components/Right'
 
 export default {
   name: 'app',
-  components: {
-    Left, Middle
-  },
+  // components: {
+  //   Left, Middle
+  // },
   mixins: [Mixin],
   mounted(){
     let searchInput = new AmazonAutocomplete('#search-input'); 
