@@ -1,59 +1,53 @@
 <template>
-  <div id="app">
+  <div>
   
-    <nav class="navbar navbar-toggleable-md navbar-light bg-faded">
-      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <a class="navbar-brand" href="#">
-        <img src="//placehold.it/300x150/449955/FFF" width="30" height="30" class="d-inline-block align-top" alt="">
-        Amazon45..
-      </a>
+      <nav class="navbar navbar-toggleable-md navbar-light bg-faded">
+        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <a class="navbar-brand" href="#">
+          <img src="//placehold.it/300x150/449955/FFF" width="30" height="30" class="d-inline-block align-top" alt="">
+          Amazon45..
+        </a>
 
-      <div class="navbar-collapse collapse justify-content-stretch" id="navbar5">
-
-          <form class="mx-2 my-auto d-inline w-50">
-              <div class="input-group">
-                  <input id="search-input" type="text" class="form-control" v-model="keywords" placeholder="Search">
-                  <span class="input-group-btn">
-                  <button class="btn btn-outline-warning" v-on:click="search" type="button">GO</button>
-                </span>
-              </div>
-          </form>
-
+        <div class="navbar-collapse collapse justify-content-stretch" id="navbar5">
+           
+                <div class="input-group">
+                    <input id="search-input" type="text" class="form-control" v-model="keywords" placeholder="Search">
+                    <span class="input-group-btn">
+                    <button class="btn btn-outline-warning" v-on:click="search" type="button">GO</button>
+                  </span>
+                </div>
+           
+        </div>
+      </nav>
+      <div class="row">
+        <left :searchedWords="searchList" v-on:re_search='search'></left>
+        <middle :items="itemList"></middle>
       </div>
-
-    </nav>
-
-    <div class="row">
-      <left :searchedWords="searchList"></left>
-      <middle :items="itemList"></middle>
-      <right></right>
-    </div>
-
-    <bottom></bottom>
+ 
+        <bottom></bottom>
+      
 
   </div>
 </template>
 
 <script>
-import Vue from 'vue'
-import Top from './components/Top'
+ 
+import AmazonSvc from './services/AmazonSvc'
+import Mixin from './helpers/mixin.js'
 import Left from './components/Left'
 import Middle from './components/Middle'
 import Right from './components/Right'
-import Bottom from './components/Bottom'
-import AmazonSvc from './services/AmazonSvc';
-import Mixin from './helpers/mixin.js';
 
 export default {
   name: 'app',
   components: {
-    Top, Left, Middle, Right, Bottom
+    Left, Middle
   },
   mixins: [Mixin],
-  created(){
-
+  mounted(){
+    let searchInput = new AmazonAutocomplete('#search-input'); 
   },
   props:{
     items:[]
@@ -63,20 +57,24 @@ export default {
       itemList: [],
       searchList: [],
       // itemList: ['one', 'two', 'three'],
-      keywords: ''
+      keywords: '',
+      tempList:[]   // Temporarily holds the keywords. Used if keyword already exists.
     }
   },
   methods: {
    search: function(event){
       var i;
-      // this.searchList.splice(0, this.searchList.length);
       var id = this.guid();
-      this.searchList.push({keyword: this.keywords, id: id});
-      if (event){
-         event.preventDefault();
+
+     // Check if the keyword search already exists
+      if (this.tempList.indexOf(this.keywords) == -1) {
+        //Not In the array! Add it.
+        this.searchList.push({keyword: this.keywords, id: id});
+        this.tempList.push(this.keywords);
+      }
          AmazonSvc.http().get(this.keywords).then(resp => {
-           console.log('sta', resp.status);
-           if(resp.status == 200){
+           console.log('sta', resp.data);
+           if(resp.status == 200 && resp.data != 'server error'){
 
               // clear the list first.
                this.itemList.splice(0, this.itemList.length);
@@ -99,7 +97,7 @@ export default {
         //   }
         // );
         
-      }
+      // }
     }
   }
 }
@@ -111,11 +109,12 @@ export default {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;
-}
+},
 
 button {
   cursor: pointer !important;
 }
+
 
 
 

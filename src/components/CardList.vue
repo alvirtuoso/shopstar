@@ -79,7 +79,7 @@ console.log('cardList prop items: ', this.items);
   position: absolute;
   bottom: 0;
   right: 5px;
-  //padding: 0 1.2em;
+  padding: 0 1.2em;
   background: inherit;
 }
 .title-collapse span:after {

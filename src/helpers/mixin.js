@@ -1,8 +1,5 @@
 export default {
     methods:{
-        foo: function(){
-            console.log('ello mixin');
-        },
         guid: function() {
         return this.s4() + this.s4() + '-' + this.s4() + '-' + this.s4() + '-' +
             this.s4() + '-' + this.s4() + this.s4() + this.s4();
