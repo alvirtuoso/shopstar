@@ -1,6 +1,8 @@
 import axios from 'axios'
 import {fromPromise} from 'rxjs/observable/fromPromise'
 import {from} from 'rxjs/observable/from'
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/share';
 
 export default {
   /**

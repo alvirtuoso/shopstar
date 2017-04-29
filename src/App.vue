@@ -23,7 +23,7 @@
       </nav>
       <div class="row">
         <left :searchedWords="searchList" v-on:re_search='search'></left>
-        <middle :items="itemList"></middle>
+        <middle></middle>
       </div>
  
         <bottom></bottom>
@@ -42,7 +42,7 @@ export default {
   name: 'app',
   mixins: [Mixin],
   computed: mapState([
-    'count'
+    'itemList'
   ]),
   mounted(){
     // console.log('store at Appvue:', this.store.state.count) // -> 1
@@ -53,9 +53,8 @@ export default {
   },
   data: function(){
     return{
-      itemList: [],
-      searchList: [],
-      // itemList: ['one', 'two', 'three'],
+      // itemList: [],
+      searchList: [], // used to hold search keywords for the "search history" feature
       keywords: '',
       tempList:[]   // Temporarily holds the keywords. Used if keyword already exists.
     }
@@ -71,20 +70,23 @@ export default {
         this.searchList.push({keyword: this.keywords, id: id});
         this.tempList.push(this.keywords);
       }
-         AmazonSvc.http().get(this.keywords).then(resp => {
-           console.log('sta', resp.data);
-           if(resp.status == 200 && resp.data != 'server error'){
+      this.$store.dispatch('FetchData', this.keywords);
+      // this.itemList = this.$store.state.itemList;
+      // console.log('appvue itemlist', this.itemList)
+        //  AmazonSvc.http().get(this.keywords).then(resp => {
+        //    console.log('sta', resp.data);
+        //    if(resp.status == 200 && resp.data != 'server error'){
 
-              // clear the list first.
-               this.itemList.splice(0, this.itemList.length);
-              for(i=0; i<resp.data.length; i++){
-                if(!resp.data[i].urlSmallImage){resp.data[i].urlSmallImage = '/static/img/no_image_available.5304255.jpg';}
-                if(!resp.data[i].urlMediumImage){resp.data[i].urlMediumImage = '/static/img/no_image_available.5304255.jpg';}
-                if(!resp.data[i].urlLargeImage){resp.data[i].urlLargeImage = '/static/img/no_image_available.5304255.jpg';}
-                this.itemList.push(resp.data[i]);            
-              }
-           }
-         });
+        //       // clear the list first.
+        //        this.itemList.splice(0, this.itemList.length);
+        //       for(i=0; i<resp.data.length; i++){
+        //         if(!resp.data[i].urlSmallImage){resp.data[i].urlSmallImage = '/static/img/no_image_available.5304255.jpg';}
+        //         if(!resp.data[i].urlMediumImage){resp.data[i].urlMediumImage = '/static/img/no_image_available.5304255.jpg';}
+        //         if(!resp.data[i].urlLargeImage){resp.data[i].urlLargeImage = '/static/img/no_image_available.5304255.jpg';}
+        //         this.itemList.push(resp.data[i]);            
+        //       }
+        //    }
+        //  });
          this.$localStorage.set('searchedWords', this.searchList);
 
          // // You may use this to get observable

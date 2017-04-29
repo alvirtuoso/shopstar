@@ -12,7 +12,7 @@
                 </p>
                   <span slot="content">{{item.title}} </span>
             </b-popover>
-              <label>34 reviews</label>
+              <label>9 reviews</label>
           </div>
       </div>
     </div>
@@ -40,10 +40,10 @@ export default {
   subscriptions: {
       m$: msgObservable
     },
-  props:['items'],
+  // props:['items'],
   data () {
     return {
-      itemList: this.items,
+      // itemList: this.items,
       msg: [],
       ob: {},
       currentPage: 1
@@ -53,6 +53,9 @@ export default {
       console.log('middle itemLIst data:', this.itemList);
   },
   computed:{
+    itemList: function(){
+      return this.$store.state.itemList
+    }, 
     pageClicked: function(){
       return this.currentPage;
     }

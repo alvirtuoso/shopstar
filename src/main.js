@@ -64,9 +64,9 @@ new Vue({
     searchedWords: [],
   },
   mounted(){
-    store.commit('increment')
+    // store.commit('increment')
 
-console.log('store here:', store.state.count) // -> 1
+// console.log('store here:', store.state.count) // -> 1
   },
   components: { App }
 
