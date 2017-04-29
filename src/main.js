@@ -17,8 +17,9 @@ import Bottom from './components/Bottom'
 import Left from './components/Left'
 import Test from './components/Test'
 import Middle from './components/Middle'
+import Pagination from './components/Pagination' 
 import '../node_modules/amazon-autocomplete/dist/amazon-autocomplete.min.js'
-import Paginate from 'vuejs-paginate'
+import { store } from './services/store'
 
 Vue.config.productionTip = false;
 
@@ -27,13 +28,12 @@ Vue.use(VueRouter);
 Vue.use(VueRx);
 Vue.use(BootstrapVue);
 
-Vue.component('paginate', Paginate)
 Vue.component('app', App);
 Vue.component('bottom', Bottom)      // global registration
 Vue.component('card-list', CardList ); // register component globally
 Vue.component('left', Left);
 Vue.component('middle', Middle);
-
+Vue.component('pagination', Pagination );
 Vue.component('test', Test);
 Vue.component('ave-review', AveReview);
 Vue.use(VueLazyload, {
@@ -56,11 +56,17 @@ const router = new VueRouter({
 /* eslint-disable no-new */
 new Vue({
   router,
+  store,
   localStorage: {
     someNumber: {
       type: Number,
     },
     searchedWords: [],
+  },
+  mounted(){
+    store.commit('increment')
+
+console.log('store here:', store.state.count) // -> 1
   },
   components: { App }
 

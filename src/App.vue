@@ -10,10 +10,10 @@
           Amazon45..
         </a>
 
-        <div class="navbar-collapse collapse justify-content-stretch" id="navbar5">
+        <div class="navbar-collapse collapse" id="navbar5">
            
-                <div class="input-group">
-                    <input id="search-input" type="text" class="form-control" v-model="keywords" placeholder="Search">
+                <div class="input-group w-50">
+                    <input id="search-input-off" type="text" class="form-control" v-model="keywords" placeholder="Search">
                     <span class="input-group-btn">
                     <button class="btn btn-outline-warning" v-on:click="search" type="button">GO</button>
                   </span>
@@ -36,18 +36,17 @@
  
 import AmazonSvc from './services/AmazonSvc'
 import Mixin from './helpers/mixin.js'
-// import Left from './components/Left'
-// import Middle from './components/Middle'
-// import Right from './components/Right'
+import { mapState } from 'vuex'
 
 export default {
   name: 'app',
-  // components: {
-  //   Left, Middle
-  // },
   mixins: [Mixin],
+  computed: mapState([
+    'count'
+  ]),
   mounted(){
-    let searchInput = new AmazonAutocomplete('#search-input'); 
+    // console.log('store at Appvue:', this.store.state.count) // -> 1
+    // let searchInput = new AmazonAutocomplete('#search-input'); 
   },
   props:{
     items:[]

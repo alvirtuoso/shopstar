@@ -17,19 +17,11 @@
       </div>
     </div>
  </div>
- 
-  <div class="row">
-    <paginate 
-    :page-count="5"
-    :page-range="3"
-    :margin-pages="2"
-    :click-handler="pageClick"
-    :prev-text="'Prev'"
-    :next-text="'Next'"
-    :container-class="'pagination'">
-    </paginate>
-  </div>
+   <div class="row justify-content-center">
 
+     <b-pagination size="md" :total-rows="50" v-model="currentPage" :per-page="10">
+     </b-pagination>
+   </div>
 </div>
 
 </template>
@@ -53,15 +45,22 @@ export default {
     return {
       itemList: this.items,
       msg: [],
-      ob: {}
+      ob: {},
+      currentPage: 1
     }
   },
   mounted: function(){
       console.log('middle itemLIst data:', this.itemList);
   },
+  computed:{
+    pageClicked: function(){
+      return this.currentPage;
+    }
+  },
   methods: {
-      pageClick: function(pageNum) {
-        console.log(pageNum)
+      clicked: function() {
+        console.log('currentPage:');
+
       }
   }
 }
@@ -100,13 +99,13 @@ img{
 
 }
 
-.pagination {
-    display: inline-block;
+.pageit {
+    display: inline-block !important;
     list-style: none;
 }
 
-.pagination a {
-    color: black;
+.pageit a {
+    color: black !important;
     float: left;
     padding: 8px 16px;
     text-decoration: none;
@@ -114,13 +113,15 @@ img{
     border: 1px solid #ddd;
 }
 
-.pagination a.active {
+.pageit a.active {
     background-color: #4CAF50;
     color: white;
     border: 1px solid #4CAF50;
 }
 
-.pagination a:hover:not(.active) {background-color: #ddd;}
-
+.pageit a:hover:not(.active) {background-color: #ddd;}
+.page-itemit{
+  color:red;
+}
 </style>
 

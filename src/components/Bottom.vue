@@ -35,7 +35,7 @@
                 <br>
             </div>
             <div class="col-md-2">
-                <h5 class="text-md-right">Contact Us</h5>
+                <h5 class="text-md-right">Contact Us {{counter}}</h5>
                 <hr>
             </div>
             <div class="col-md-5">
@@ -55,15 +55,21 @@
     </div>
 </footer>
 </template>
+
 <script>
 
-    export default{
+export default{
         name:'bottom',
         created(){
-
+                console.log('bootm', this.$store.state.count)
                 //var amzxml = new JKL.ParseXML('../assets/xml.xml');
             //     var amzdata = amzxml.parse();
             //     console.log(amzdata.ItemSearchResponse.Items.Item[0].ASIN);
+        },
+        computed:{
+            counter(){
+                return this.$store.state.count;
+            }
         }
     }
 </script>
