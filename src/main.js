@@ -17,7 +17,6 @@ import Bottom from './components/Bottom'
 import Left from './components/Left'
 import Test from './components/Test'
 import Middle from './components/Middle'
-import Pagination from './components/Pagination' 
 import '../node_modules/amazon-autocomplete/dist/amazon-autocomplete.min.js'
 import { store } from './services/store'
 
@@ -33,9 +32,10 @@ Vue.component('bottom', Bottom)      // global registration
 Vue.component('card-list', CardList ); // register component globally
 Vue.component('left', Left);
 Vue.component('middle', Middle);
-Vue.component('pagination', Pagination );
+
 Vue.component('test', Test);
 Vue.component('ave-review', AveReview);
+
 Vue.use(VueLazyload, {
   preLoad: 1.3,
   error: './assets/no_image_available.jpg',

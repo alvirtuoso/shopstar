@@ -17,9 +17,8 @@
       </div>
     </div>
  </div>
-   <div class="row justify-content-center">
-
-     <b-pagination size="md" :total-rows="50" v-model="currentPage" :per-page="10">
+   <div class="row justify-content-center">{{currentPage}}
+     <b-pagination size="md"v-on:input="pageChanged" :total-rows="50" v-model="currentPage" :per-page="10">
      </b-pagination>
    </div>
 </div>
@@ -55,15 +54,12 @@ export default {
   computed:{
     itemList: function(){
       return this.$store.state.itemList
-    }, 
-    pageClicked: function(){
-      return this.currentPage;
     }
   },
   methods: {
-      clicked: function() {
-        console.log('currentPage:');
-
+      pageChanged: function() {
+        console.log('keyword state', this.$store.state.keyword)
+        this.$store.dispatch('FetchData', {keyword: this.$store.state.keyword, page: this.currentPage});
       }
   }
 }

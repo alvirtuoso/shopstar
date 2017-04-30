@@ -2,7 +2,7 @@
   
  <div class="col-md-2">
     <div class="list-group padding-1">
-        <a href="#" class="list-group-item list-group-item-action truncate-ellipsis" v-for="word in searchList" :key="word.id">
+        <a href="#" v-for="word in searchList" :key="word.id" @click="search(word.keyword)" class="list-group-item list-group-item-action truncate-ellipsis" >
             {{word.keyword}}
         </a>
     </div>
@@ -19,12 +19,10 @@
                 searchList: this.searchedWords
             }
         },  
-        props:['searchedWords'],     
-        methods: {
-            re_search: function(){
-                console.log('hx');
-                this.$emit('re_search')
-
+        props:['searchedWords'],
+        methods:{
+            search(keyword){
+                this.$store.dispatch('FetchData', {keyword: keyword , page: '1'});
             }
         }
     }

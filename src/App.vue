@@ -12,12 +12,12 @@
 
         <div class="navbar-collapse collapse" id="navbar5">
            
-                <div class="input-group w-50">
-                    <input id="search-input-off" type="text" class="form-control" v-model="keywords" placeholder="Search">
-                    <span class="input-group-btn">
-                    <button class="btn btn-outline-warning" v-on:click="search" type="button">GO</button>
-                  </span>
-                </div>
+            <div class="input-group w-50">
+                <input id="search-input-off" type="text" class="form-control" @keyup.enter="search" v-model="keywords" placeholder="Search">
+                <span class="input-group-btn">
+                <button class="btn btn-outline-warning" v-on:click="search" type="button">GO</button>
+              </span>
+            </div>
            
         </div>
       </nav>
@@ -70,35 +70,10 @@ export default {
         this.searchList.push({keyword: this.keywords, id: id});
         this.tempList.push(this.keywords);
       }
-      this.$store.dispatch('FetchData', this.keywords);
-      // this.itemList = this.$store.state.itemList;
-      // console.log('appvue itemlist', this.itemList)
-        //  AmazonSvc.http().get(this.keywords).then(resp => {
-        //    console.log('sta', resp.data);
-        //    if(resp.status == 200 && resp.data != 'server error'){
+      this.$store.dispatch('UpdateKeyword', this.keywords)
+      this.$store.dispatch('FetchData', {keyword: this.keywords, page: '1'});
 
-        //       // clear the list first.
-        //        this.itemList.splice(0, this.itemList.length);
-        //       for(i=0; i<resp.data.length; i++){
-        //         if(!resp.data[i].urlSmallImage){resp.data[i].urlSmallImage = '/static/img/no_image_available.5304255.jpg';}
-        //         if(!resp.data[i].urlMediumImage){resp.data[i].urlMediumImage = '/static/img/no_image_available.5304255.jpg';}
-        //         if(!resp.data[i].urlLargeImage){resp.data[i].urlLargeImage = '/static/img/no_image_available.5304255.jpg';}
-        //         this.itemList.push(resp.data[i]);            
-        //       }
-        //    }
-        //  });
-         this.$localStorage.set('searchedWords', this.searchList);
-
-         // // You may use this to get observable
-        // AmazonSvc.geItemsRequest(this.keywords).subscribe(
-        //   (resp) => {
-        //      for(i=0; i<resp.data.length; i++){
-        //         this.itemList.push(resp.data[i]);
-        //    }
-        //   }
-        // );
-        
-      // }
+      this.$localStorage.set('searchedWords', this.searchList);
     }
   }
 }
