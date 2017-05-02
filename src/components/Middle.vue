@@ -8,7 +8,7 @@
           <div class="card-block padding-5">
               <b-popover :placement="'bottom'" :triggers="['hover']">
                 <p class="title-collapse">
-                    <a href="#">{{item.title}}</a>
+                    <a :href="item.urlItemLink">{{item.title}}</a>
                 </p>
                   <span slot="content">{{item.title}} </span>
             </b-popover>
@@ -17,7 +17,7 @@
       </div>
     </div>
  </div>
-   <div class="row justify-content-center">{{currentPage}}
+   <div class="row justify-content-center">
      <b-pagination size="md"v-on:input="pageChanged" :total-rows="50" v-model="currentPage" :per-page="10">
      </b-pagination>
    </div>
