@@ -12,8 +12,8 @@
                 </p>
                   <span slot="content">{{item.title}} </span>
             </b-popover>
-              <label>9 reviews</label>
-          </div>
+            <ave-review :urlReview="item.urlReview"></ave-review>
+          </div>          
       </div>
     </div>
  </div>
@@ -27,18 +27,10 @@
 
 <script>
 
-import {fromPromise} from 'rxjs/observable/fromPromise';
-import {from} from 'rxjs/observable/from';
-
-  const msgObservable = from(
-    ['Hi HEllo there msgObservable']
-  );
+// import Constants from '../services/Constants'
 
 export default {
   name: 'middle',
-  subscriptions: {
-      m$: msgObservable
-    },
   // props:['items'],
   data () {
     return {
@@ -49,7 +41,7 @@ export default {
     }
   },
   mounted: function(){
-      console.log('middle itemLIst data:', this.itemList);
+    // console.log('rev', constants.REVIEWS);
   },
   computed:{
     itemList: function(){

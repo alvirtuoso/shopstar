@@ -1,17 +1,20 @@
 <template>
-    <h1>{{greeting}}</h1>
+<label>{{this.aveStars}}</label>
 </template>
 <script>
+import AmazonSvc from '../services/AmazonSvc'
     export default{
         name: 'ave-review',
-        props:['url'],
-        created(){
-            
+        props: ['urlReview'],
+        mounted(){
+            AmazonSvc.getItemAveReviews(this.urlReview)
+                .then(resp => { 
+                    this.aveStars = resp.data 
+                    })
         },
         data: function() {
             return {
-                greeting: this.url,  //this will contain the content of the username input automatically
-                silence: "ssshhh"  // this will contain the content of the passsword input automatically
+                aveStars: ''  // this will contain the content of the passsword input automatically
             };
         },
     }

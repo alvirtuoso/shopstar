@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from 'axios'
+import { ITEMS_URI } from '../services/Constants'
 Vue.use(Vuex)
 const store = new Vuex.Store({
   state: {
@@ -22,7 +23,7 @@ const store = new Vuex.Store({
   actions: {
     FetchData({commit}, params){
         console.log('action fetch', params.keyword);
-        axios.get(`http://127.0.0.1:5000/api/amazon/` + params.keyword + `/` + params.page).then(resp => {
+        axios.get(ITEMS_URI + params.keyword + `/` + params.page).then(resp => {
           if(resp.status == 200 && resp.data != 'server error'){
                 commit('SetItemList', {list: resp.data})
            }

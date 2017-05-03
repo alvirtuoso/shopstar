@@ -57,11 +57,11 @@
 </template>
 
 <script>
-
+import {REVIEWS} from '../services/Constants'
 export default{
         name:'bottom',
         created(){
-                // console.log('bootm', this.$store.state.count)
+                console.log('bootm', REVIEWS)
                 //var amzxml = new JKL.ParseXML('../assets/xml.xml');
             //     var amzdata = amzxml.parse();
             //     console.log(amzdata.ItemSearchResponse.Items.Item[0].ASIN);
