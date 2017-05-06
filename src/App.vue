@@ -13,7 +13,7 @@
         <div class="navbar-collapse collapse" id="navbar5">
            
             <div class="input-group w-50">
-                <input id="search-input-off" type="text" class="form-control" @keyup.enter="search" v-model="keywords" placeholder="Search">
+                <input id="search-input-off" type="text" class="form-control" @keyup.enter="search" v-model="keyword" placeholder="Search">
                 <span class="input-group-btn">
                 <button class="btn btn-outline-warning" v-on:click="search" type="button">GO</button>
               </span>
@@ -22,7 +22,10 @@
         </div>
       </nav>
       <div class="row">
-        <left :searchedWords="searchList" v-on:re_search='search'></left>
+        <br />
+      </div>
+      <div class="row">
+        <left v-on:re_search='search'></left>
         <middle></middle>
       </div>
  
@@ -45,7 +48,7 @@ export default {
     'itemList'
   ]),
   mounted(){
-    // console.log('store at Appvue:', this.store.state.count) // -> 1
+    // console.log('store searchList at Appvue:', this.searchList[0]) // -> 1
     // let searchInput = new AmazonAutocomplete('#search-input'); 
   },
   props:{
@@ -54,8 +57,8 @@ export default {
   data: function(){
     return{
       // itemList: [],
-      searchList: [], // used to hold search keywords for the "search history" feature
-      keywords: '',
+      searchList: this.$store.state.keywordList, // used to hold search keywords for the "search history" feature
+      keyword: '',
       tempList:[]   // Temporarily holds the keywords. Used if keyword already exists.
     }
   },
@@ -65,13 +68,15 @@ export default {
       var id = this.guid();
 
      // Check if the keyword search already exists
-      if (this.tempList.indexOf(this.keywords) == -1) {
-        //Not In the array! Add it.
-        this.searchList.push({keyword: this.keywords, id: id});
-        this.tempList.push(this.keywords);
-      }
-      this.$store.dispatch('UpdateKeyword', this.keywords)
-      this.$store.dispatch('FetchData', {keyword: this.keywords, page: '1'});
+      // if (this.tempList.indexOf(this.keywords) == -1) {
+      //   //Not In the array! Add it.
+      //   this.searchList.push({keyword: this.keywords, id: id});
+      //   this.tempList.push(this.keywords);
+      // }
+      this.keyword = this.keyword.replace(/[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/gi, '');
+      this.$store.dispatch('UpdateKeyword', this.keyword)
+      this.$store.dispatch('SaveKeywordToArchive', {keyword: this.keyword, id: id})
+      this.$store.dispatch('FetchData', {keyword: this.keyword, page: '1'});
 
       this.$localStorage.set('searchedWords', this.searchList);
     }

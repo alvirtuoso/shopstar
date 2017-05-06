@@ -16,13 +16,15 @@ const store = new Vuex.Store({
     SetKeyword: function(state, { keyword }){
         state.keyword = keyword
     },
-    ArchiveKeyword: function(state, { keyword }){
-        state.keywordList.push(keyword)
+    ArchiveKeyword: function(state, { wordAndId }){
+        if(state.keywordList.indexOf(wordAndId.keyword) == -1){
+            // Not in the list so add it.
+            state.keywordList.push(wordAndId)
+        }
     }
   },
   actions: {
     FetchData({commit}, params){
-        console.log('action fetch', params.keyword);
         axios.get(ITEMS_URI + params.keyword + `/` + params.page).then(resp => {
           if(resp.status == 200 && resp.data != 'server error'){
                 commit('SetItemList', {list: resp.data})
@@ -35,8 +37,8 @@ const store = new Vuex.Store({
     UpdateKeyword({commit}, word){
         commit('SetKeyword', {keyword: word})
     },
-    SaveKeywordToList({commit}, word){
-        commit('ArchiveKeyword', {keyword: word})
+    SaveKeywordToArchive({commit}, wordAndId){
+            commit('ArchiveKeyword', {wordAndId})
     }
   }
 })

@@ -13,6 +13,6 @@
 //     return apibase + 'reviews'
 //   }
 // }
-export const API_BASE = `http://127.0.0.1:5000/api/amazon/`;
+export const API_BASE = `http://127.0.0.1:3000/api/amazon/`;
 export const ITEMS_URI = API_BASE + 'items/';
 export const REVIEWS = API_BASE +  'reviews/';

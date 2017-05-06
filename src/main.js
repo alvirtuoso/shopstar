@@ -18,6 +18,13 @@ import Left from './components/Left'
 import Middle from './components/Middle'
 import '../node_modules/amazon-autocomplete/dist/amazon-autocomplete.min.js'
 import { store } from './services/store'
+import 'vue-awesome/icons/facebook-square'
+import 'vue-awesome/icons/google-plus-square'
+import 'vue-awesome/icons/pinterest-square'
+import 'vue-awesome/icons/twitter-square'
+import Icon from 'vue-awesome/components/Icon'
+
+var SocialSharing = require('vue-social-sharing');
 
 Vue.config.productionTip = false;
 
@@ -25,6 +32,7 @@ Vue.use(VueLocalStorage);
 Vue.use(VueRouter);
 Vue.use(VueRx);
 Vue.use(BootstrapVue);
+Vue.use(SocialSharing);
 
 Vue.component('app', App);
 Vue.component('bottom', Bottom)      // global registration
@@ -32,7 +40,7 @@ Vue.component('card-list', CardList ); // register component globally
 Vue.component('left', Left);
 Vue.component('middle', Middle);
 Vue.component('ave-review', AveReview);
-
+Vue.component('icon', Icon);
 
 Vue.use(VueLazyload, {
   preLoad: 1.3,

@@ -1,6 +1,9 @@
 <template>
   
  <div class="col-md-2">
+    <div class="row justify-content-center">
+        <h6>Search History</h6>
+    </div>
     <div class="list-group padding-1">
         <a href="#" v-for="word in searchList" :key="word.id" @click="search(word.keyword)" class="list-group-item list-group-item-action truncate-ellipsis" >
             {{word.keyword}}
@@ -16,10 +19,13 @@
         data(){
             return {
                 msg: 'Hellow World of testing',
-                searchList: this.searchedWords
+                searchList: this.$store.state.keywordList
             }
         },  
-        props:['searchedWords'],
+        mounted(){
+            console.log('left keyworlist', this.searchList)
+        },
+        // props:['searchedWords'],
         methods:{
             search(keyword){
                 this.$store.dispatch('FetchData', {keyword: keyword , page: '1'});

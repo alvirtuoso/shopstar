@@ -2,57 +2,124 @@
 
 <div class="col-md-7">
   <div class="row">
-    <div class="col-sm-3" v-for="item in itemList">
+
       <div class="card">
-          <img class="card-img-top" :src= "item.urlMediumImage" :alt="item.title">
-          <div class="card-block padding-5">
-              <b-popover :placement="'bottom'" :triggers="['hover']">
-                <p class="title-collapse">
-                    <a :href="item.urlItemLink">{{item.title}}</a>
-                </p>
-                  <span slot="content">{{item.title}} </span>
-            </b-popover>
-            <ave-review :urlReview="item.urlReview"></ave-review>
-          </div>          
+          <ul class="list-group list-group-flush">
+              <li class="list-group-item" v-for="(item, index) in itemList">
+                <h6>{{item.title}}</h6>
+                <label> {{item.price}}</label>
+                <img class="card-img-top" :src= "item.urlLargeImage" :alt="item.title">
+                <ave-review :urlReview="item.urlReview" ref="review"></ave-review>
+
+                        <social-sharing :url="item.urlItemLink" inline-template>
+                        <div>
+                            <network network="facebook">
+                                <icon name="facebook-square" color="#3B5998" cursor="pointer" scale="3"></icon>
+                            </network>
+                            <network network="googleplus">
+                            <icon name="google-plus-square" color="#DD4B39" cursor="pointer" scale="3"></icon>
+                            </network>
+                            <network network="pinterest">
+                            <icon name="pinterest-square" color="#CC2127" cursor="pointer" scale="3"></icon>
+                            </network>
+                            <network network="twitter">
+                            <icon name="twitter-square" color="#55ACEE" cursor="pointer" scale="3"></icon>
+                            </network>
+                        </div>
+                        </social-sharing>
+
+              </li>
+            </ul>
+           
+
       </div>
-    </div>
+
  </div>
    <div class="row justify-content-center">
-     <b-pagination size="md"v-on:input="pageChanged" :total-rows="50" v-model="currentPage" :per-page="10">
+     <b-pagination size="md" v-on:input="pageChanged" :total-rows="50" v-model="currentPage" :per-page="10">
      </b-pagination>
    </div>
 </div>
 
 </template>
 
-<script>
-
-// import Constants from '../services/Constants'
-
+<script> 
+// <infinite-loading :on-infinite="onInfinite" ref="infiniteLoading"></infinite-loading>
+import InfiniteLoading from 'vue-infinite-loading';
 export default {
   name: 'middle',
-  // props:['items'],
+  components: {
+    InfiniteLoading,
+  },
   data () {
     return {
-      // itemList: this.items,
-      msg: [],
-      ob: {},
-      currentPage: 1
+      currentPage: 1,
+      itemIndex: 0
     }
   },
-  mounted: function(){
-    // console.log('rev', constants.REVIEWS);
+  mounted(){
+    
+  },
+  updated(){
+    // this.$refs.review[2].$el.innerText = "4 of 5 stars"
+    // console.log('updated reviews', this.$refs.review)
+     // this.$refs.review.forEach(function(reviewComponent){
+        // reviewComponent.$el.innerText = "ok"
+            // AmazonSvc.getItemAveReviews(reviewComponent.urlData).then(resp => { 
+               
+            //     reviewComponent.$el.innerText = resp.data
+            //      // //this.$store.state.itemList[itemIndex].starLabel = resp.data
+            // })
+          
+      //})
+      // console.log('itemlist', this.itemList)
   },
   computed:{
     itemList: function(){
       return this.$store.state.itemList
+    },
+    aveStars: function(){
+      return '0'
     }
   },
   methods: {
       pageChanged: function() {
-        console.log('keyword state', this.$store.state.keyword)
-        this.$store.dispatch('FetchData', {keyword: this.$store.state.keyword, page: this.currentPage});
+        this.$store.dispatch('FetchData', {keyword: this.$store.state.keyword, page: this.currentPage})
+        // this.$refs.review[7].$el.innerText = "2.9 of 5 stars"
+        // this.$refs.review.forEach(function(reviewComponent){
+        //   // reviewComponent.$el.innerText = Math.random();
+        //     AmazonSvc.getItemAveReviews(reviewComponent.urlData).then(resp => { 
+        //        console.log('reviewcomp', reviewComponent)
+        //         reviewComponent.$el.innerText = Math.random();
+        //          // //this.$store.state.itemList[itemIndex].starLabel = resp.data
+        //     })
+
+        // })
+            // const promises = this.$refs.review.map((reviewComponent) => {
+            //   console.log('urlRevvv', reviewComponent.urlData)
+            //     axios.get(REVIEWS + encodeURIComponent(reviewComponent.urlData))      
+            //     // this.$http.get(`/cms/wp-json/wp/v2/cases-studies/?slug=${encodeURIComponent(article.slug)}`)
+            // });
+            // axios.all(promises).then((results) => {
+            //     var arr = results.map((result) => result.data);
+            //     console.log('arr', arr)
+            // });
+        // axios.all(promises).then(function(arr){
+            //     console.log('arr', arr)
+            // })
+
+      },
+      onInfinite: function(){
+        setTimeout(() => {
+          const temp = [];
+          for (let i = this.itemList.length + 1; i <= this.itemList.length + 10; i++) {
+            temp.push(i);
+          }
+          // this.list = this.list.concat(temp);
+          // this.$refs.infiniteLoading.$emit('$InfiniteLoading:loaded');
+        }, 1000);        
       }
+
   }
 }
 </script>
