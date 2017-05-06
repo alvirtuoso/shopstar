@@ -17,8 +17,16 @@ const store = new Vuex.Store({
         state.keyword = keyword
     },
     ArchiveKeyword: function(state, { wordAndId }){
-        if(state.keywordList.indexOf(wordAndId.keyword) == -1){
-            // Not in the list so add it.
+        var exists = false;
+        if(state.keywordList.length > 1){
+            for (var i = 0; i < state.keywordList.length; i++){
+                if(state.keywordList[i].keyword == wordAndId.keyword){
+                    exists = true;
+                    break;
+                }
+            }
+        }
+        if(!exists){
             state.keywordList.push(wordAndId)
         }
     }

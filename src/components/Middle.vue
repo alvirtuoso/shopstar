@@ -1,7 +1,7 @@
 <template>
 
 <div class="col-md-7">
-  <div class="row">
+  <div class="row" id="listcontainer">
 
       <div class="card">
           <ul class="list-group list-group-flush">
@@ -39,18 +39,19 @@
      <b-pagination size="md" v-on:input="pageChanged" :total-rows="50" v-model="currentPage" :per-page="10">
      </b-pagination>
    </div>
+   <button @click="scrollToTop">top</button>
 </div>
 
 </template>
 
 <script> 
 // <infinite-loading :on-infinite="onInfinite" ref="infiniteLoading"></infinite-loading>
-import InfiniteLoading from 'vue-infinite-loading';
+// import InfiniteLoading from 'vue-infinite-loading';
 export default {
   name: 'middle',
-  components: {
-    InfiniteLoading,
-  },
+  // components: {
+  //   InfiniteLoading,
+  // },
   data () {
     return {
       currentPage: 1,
@@ -85,40 +86,32 @@ export default {
   methods: {
       pageChanged: function() {
         this.$store.dispatch('FetchData', {keyword: this.$store.state.keyword, page: this.currentPage})
-        // this.$refs.review[7].$el.innerText = "2.9 of 5 stars"
-        // this.$refs.review.forEach(function(reviewComponent){
-        //   // reviewComponent.$el.innerText = Math.random();
-        //     AmazonSvc.getItemAveReviews(reviewComponent.urlData).then(resp => { 
-        //        console.log('reviewcomp', reviewComponent)
-        //         reviewComponent.$el.innerText = Math.random();
-        //          // //this.$store.state.itemList[itemIndex].starLabel = resp.data
-        //     })
-
-        // })
-            // const promises = this.$refs.review.map((reviewComponent) => {
-            //   console.log('urlRevvv', reviewComponent.urlData)
-            //     axios.get(REVIEWS + encodeURIComponent(reviewComponent.urlData))      
-            //     // this.$http.get(`/cms/wp-json/wp/v2/cases-studies/?slug=${encodeURIComponent(article.slug)}`)
-            // });
-            // axios.all(promises).then((results) => {
-            //     var arr = results.map((result) => result.data);
-            //     console.log('arr', arr)
-            // });
-        // axios.all(promises).then(function(arr){
-            //     console.log('arr', arr)
-            // })
-
+        this.scrollToTop(2000);
       },
-      onInfinite: function(){
-        setTimeout(() => {
-          const temp = [];
-          for (let i = this.itemList.length + 1; i <= this.itemList.length + 10; i++) {
-            temp.push(i);
-          }
-          // this.list = this.list.concat(temp);
-          // this.$refs.infiniteLoading.$emit('$InfiniteLoading:loaded');
-        }, 1000);        
-      }
+scrollToTop(scrollDuration) {
+    var cosParameter = window.scrollY / 2,
+        scrollCount = 0,
+        oldTimestamp = performance.now();
+    function step (newTimestamp) {
+        scrollCount += Math.PI / (scrollDuration / (newTimestamp - oldTimestamp));
+        if (scrollCount >= Math.PI) window.scrollTo(0, 0);
+        if (window.scrollY === 0) return;
+        window.scrollTo(0, Math.round(cosParameter + cosParameter * Math.cos(scrollCount)));
+        oldTimestamp = newTimestamp;
+        window.requestAnimationFrame(step);
+    }
+    window.requestAnimationFrame(step);
+}
+      // onInfinite: function(){
+      //   setTimeout(() => {
+      //     const temp = [];
+      //     for (let i = this.itemList.length + 1; i <= this.itemList.length + 10; i++) {
+      //       temp.push(i);
+      //     }
+      //     // this.list = this.list.concat(temp);
+      //     this.$refs.infiniteLoading.$emit('$InfiniteLoading:loaded');
+      //   }, 1000);        
+      // }
 
   }
 }
