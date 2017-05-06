@@ -28,7 +28,9 @@
         // props:['searchedWords'],
         methods:{
             search(keyword){
-                this.$store.dispatch('FetchData', {keyword: keyword , page: '1'});
+                this.$store.dispatch('FetchData', {keyword: keyword , page: 1});
+                this.$store.dispatch('UpdateKeyword', keyword);
+                this.$store.dispatch('SetActivePage', 1)
             }
         }
     }

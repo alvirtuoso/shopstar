@@ -7,7 +7,8 @@ const store = new Vuex.Store({
   state: {
     itemList:[],
     keywordList:[],
-    keyword: ''
+    keyword: '',
+    currentPage: 1
   },
   mutations: {
     SetItemList: function(state, { list }){
@@ -15,6 +16,9 @@ const store = new Vuex.Store({
     },
     SetKeyword: function(state, { keyword }){
         state.keyword = keyword
+    },
+    SetCurrentPage: function(state, { pageNumber }){
+        state.currentPage = pageNumber;
     },
     ArchiveKeyword: function(state, { wordAndId }){
         var exists = false;
@@ -33,7 +37,7 @@ const store = new Vuex.Store({
   },
   actions: {
     FetchData({commit}, params){
-        axios.get(ITEMS_URI + params.keyword + `/` + params.page).then(resp => {
+        axios.get(ITEMS_URI + params.keyword + `/` + params.page.toString()).then(resp => {
           if(resp.status == 200 && resp.data != 'server error'){
                 commit('SetItemList', {list: resp.data})
            }
@@ -47,6 +51,9 @@ const store = new Vuex.Store({
     },
     SaveKeywordToArchive({commit}, wordAndId){
             commit('ArchiveKeyword', {wordAndId})
+    },
+    SetActivePage({commit}, pageNumber){
+        commit('SetCurrentPage', {pageNumber})
     }
   }
 })

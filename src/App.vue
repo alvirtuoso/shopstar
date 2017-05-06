@@ -36,8 +36,7 @@
 </template>
 
 <script>
- 
-import AmazonSvc from './services/AmazonSvc'
+
 import Mixin from './helpers/mixin.js'
 import { mapState } from 'vuex'
 
@@ -58,26 +57,18 @@ export default {
     return{
       // itemList: [],
       searchList: this.$store.state.keywordList, // used to hold search keywords for the "search history" feature
-      keyword: '',
-      tempList:[]   // Temporarily holds the keywords. Used if keyword already exists.
+      keyword: ''
     }
   },
   methods: {
    search: function(event){
-      var i;
       var id = this.guid();
 
-     // Check if the keyword search already exists
-      // if (this.tempList.indexOf(this.keywords) == -1) {
-      //   //Not In the array! Add it.
-      //   this.searchList.push({keyword: this.keywords, id: id});
-      //   this.tempList.push(this.keywords);
-      // }
       this.keyword = this.keyword.replace(/[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/gi, '');
+      this.$store.dispatch('FetchData', {keyword: this.keyword, page: 1});
       this.$store.dispatch('UpdateKeyword', this.keyword)
       this.$store.dispatch('SaveKeywordToArchive', {keyword: this.keyword, id: id})
-      this.$store.dispatch('FetchData', {keyword: this.keyword, page: '1'});
-
+      this.$store.dispatch('SetActivePage', 1);
       this.$localStorage.set('searchedWords', this.searchList);
     }
   }

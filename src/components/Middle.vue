@@ -2,7 +2,6 @@
 
 <div class="col-md-7">
   <div class="row" id="listcontainer">
-
       <div class="card">
           <ul class="list-group list-group-flush">
               <li class="list-group-item" v-for="(item, index) in itemList">
@@ -39,7 +38,6 @@
      <b-pagination size="md" v-on:input="pageChanged" :total-rows="50" v-model="currentPage" :per-page="10">
      </b-pagination>
    </div>
-   <button @click="scrollToTop">top</button>
 </div>
 
 </template>
@@ -54,26 +52,9 @@ export default {
   // },
   data () {
     return {
-      currentPage: 1,
+      currentPage: this.$store.state.currentPage,
       itemIndex: 0
     }
-  },
-  mounted(){
-    
-  },
-  updated(){
-    // this.$refs.review[2].$el.innerText = "4 of 5 stars"
-    // console.log('updated reviews', this.$refs.review)
-     // this.$refs.review.forEach(function(reviewComponent){
-        // reviewComponent.$el.innerText = "ok"
-            // AmazonSvc.getItemAveReviews(reviewComponent.urlData).then(resp => { 
-               
-            //     reviewComponent.$el.innerText = resp.data
-            //      // //this.$store.state.itemList[itemIndex].starLabel = resp.data
-            // })
-          
-      //})
-      // console.log('itemlist', this.itemList)
   },
   computed:{
     itemList: function(){
@@ -83,25 +64,29 @@ export default {
       return '0'
     }
   },
+  updated(){
+    this.currentPage = this.$store.state.currentPage
+  },
   methods: {
       pageChanged: function() {
         this.$store.dispatch('FetchData', {keyword: this.$store.state.keyword, page: this.currentPage})
-        this.scrollToTop(2000);
+        this.$store.dispatch('SetActivePage', this.currentPage)
+        this.scrollToTop(1000);
       },
-scrollToTop(scrollDuration) {
-    var cosParameter = window.scrollY / 2,
-        scrollCount = 0,
-        oldTimestamp = performance.now();
-    function step (newTimestamp) {
-        scrollCount += Math.PI / (scrollDuration / (newTimestamp - oldTimestamp));
-        if (scrollCount >= Math.PI) window.scrollTo(0, 0);
-        if (window.scrollY === 0) return;
-        window.scrollTo(0, Math.round(cosParameter + cosParameter * Math.cos(scrollCount)));
-        oldTimestamp = newTimestamp;
-        window.requestAnimationFrame(step);
-    }
-    window.requestAnimationFrame(step);
-}
+      scrollToTop(scrollDuration) {
+          var cosParameter = window.scrollY / 2,
+              scrollCount = 0,
+              oldTimestamp = performance.now();
+          function step (newTimestamp) {
+              scrollCount += Math.PI / (scrollDuration / (newTimestamp - oldTimestamp));
+              if (scrollCount >= Math.PI) window.scrollTo(0, 0);
+              if (window.scrollY === 0) return;
+              window.scrollTo(0, Math.round(cosParameter + cosParameter * Math.cos(scrollCount)));
+              oldTimestamp = newTimestamp;
+              window.requestAnimationFrame(step);
+          }
+          window.requestAnimationFrame(step);
+      }
       // onInfinite: function(){
       //   setTimeout(() => {
       //     const temp = [];
