@@ -19,3 +19,8 @@ Vue.component('async-webpack-example', function (resolve) {
 'psrank','salesrank','price','-price','titlerank'
 salesrank = Bestseller
 psrank = Bestseller taking into consideration projected sales
+
+******************* Iframe Bootstrap4 CSS *****************************
+<div class="embed-responsive embed-responsive-16by9">
+<iframe class="embed-responsive-item" src="https://www.amazon.com/reviews/iframe?akid=AKIAJMJ3Q4UQJSG6WOIA&alinkCode=xm2&asin=B01E9BND2W&atag=alvirtuoso-20&exp=2017-05-10T02%3A01%3A43Z&v=2&sig=wXL2UbQzOz%252FL0i3r2zoeTWOKAkLxBXoGDW3SQ96w78I%253D" allowfullscreen></iframe>
+</div>

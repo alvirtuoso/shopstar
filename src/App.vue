@@ -25,7 +25,7 @@
         <br />
       </div>
       <div class="row">
-        <left v-on:re_search='search'></left>
+        <left></left>
         <middle></middle>
       </div>
  

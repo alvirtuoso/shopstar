@@ -8,22 +8,27 @@ import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap-vue/dist/bootstrap-vue.css';
 import {fromPromise} from 'rxjs/observable/fromPromise';
 import {from} from 'rxjs/observable/from';
-import CardList from './components/CardList';
-import AveReview from './components/AveReview';
+
 import VueLazyload from 'vue-lazyload';
 import VueLocalStorage from 'vue-localstorage';
 import VueRouter from 'vue-router';
+
+import CardList from './components/CardList';
+import AveReview from './components/AveReview';
+import ItemDetail from './components/ItemDetail';
 import Bottom from './components/Bottom'
 import Left from './components/Left'
 import Middle from './components/Middle'
+import Icon from 'vue-awesome/components/Icon'
+
 import '../node_modules/amazon-autocomplete/dist/amazon-autocomplete.min.js'
 import { store } from './services/store'
 import 'vue-awesome/icons/facebook-square'
 import 'vue-awesome/icons/google-plus-square'
 import 'vue-awesome/icons/pinterest-square'
 import 'vue-awesome/icons/twitter-square'
-import Icon from 'vue-awesome/components/Icon'
-
+import 'vue-awesome/icons/star'
+import 'vue-awesome/icons/star-half'
 var SocialSharing = require('vue-social-sharing');
 
 Vue.config.productionTip = false;
@@ -41,6 +46,7 @@ Vue.component('left', Left);
 Vue.component('middle', Middle);
 Vue.component('ave-review', AveReview);
 Vue.component('icon', Icon);
+Vue.component('item-detail', ItemDetail);
 
 Vue.use(VueLazyload, {
   preLoad: 1.3,
@@ -54,7 +60,7 @@ const router = new VueRouter({
   base: __dirname,
   routes:[
     {path: '/', component: App},
-    {path: '/detail', component:  Bottom}
+    {path: '/detail', component:  ItemDetail}
   ]
 })
 
