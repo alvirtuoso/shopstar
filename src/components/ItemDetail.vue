@@ -1,7 +1,6 @@
 <template>
   <div class="row">
-
-     <div class="col-md-9">
+     <div class="col-md-8 margin-50">
 		<div class="card">
 			<div class="container-fliud">
 				<div class="wrapper row">
@@ -24,7 +23,7 @@
 						
 					</div>
 					<div class="details col-md-6">
-						<h3 class="product-title">men's shoes fashion</h3>
+						<h6 class="product-title">{{itemData.title}}</h6>
 						<div class="rating">
 							<div class="stars">
 								 <icon name="star" color="#ff9f1a" cursor="pointer" ></icon>
@@ -35,7 +34,7 @@
 							</div>
 							<span class="review-no">41 reviews</span>
 						</div>
-						<p class="product-description">Suspendisse quos? Tempus cras iure temporibus? Eu laudantium cubilia sem sem! Repudiandae et! Massa senectus enim minim sociosqu delectus posuere.</p>
+						<p class="product-description">Her we go okokoko this is great for testing the space .</p>
 						<h4> Price: <span>$180</span></h4>
 
 						<div class="action">
@@ -68,6 +67,7 @@
 			</div>
 		</div>
   </div>
+  <right></right>
 </div>
 </template>
 <script>
@@ -75,7 +75,7 @@ export default {
     name: 'item-detail',
     mounted(){
         // this.$root.$emit('show::modal','modalItem')
-        console.log('aalist', this.aList)
+        // console.log('aalist', this.$store.state.itemList);
     },
     data: function(){
         return{
@@ -85,6 +85,9 @@ export default {
     computed: {
         aList: function(){
             return  this.$store.state.keywordList;
+        },
+        itemData: function(){
+            return this.$store.state.item;
         }
     }
 }
@@ -94,7 +97,9 @@ export default {
   width: 90%;
 
 }
-
+.margin-50{
+    margin-top: -50px;
+}
 .preview {
   display: -webkit-box;
   display: -webkit-flex;

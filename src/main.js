@@ -18,6 +18,7 @@ import AveReview from './components/AveReview';
 import ItemDetail from './components/ItemDetail';
 import Bottom from './components/Bottom'
 import Left from './components/Left'
+import Right from './components/Right'
 import Middle from './components/Middle'
 import Icon from 'vue-awesome/components/Icon'
 
@@ -43,6 +44,7 @@ Vue.component('app', App);
 Vue.component('bottom', Bottom)      // global registration
 Vue.component('card-list', CardList ); // register component globally
 Vue.component('left', Left);
+Vue.component('right', Right);
 Vue.component('middle', Middle);
 Vue.component('ave-review', AveReview);
 Vue.component('icon', Icon);
@@ -57,10 +59,21 @@ Vue.use(VueLazyload, {
 
 const router = new VueRouter({
   mode: 'history',
-  base: __dirname,
+  // base: __dirname,
   routes:[
-    {path: '/', component: App},
-    {path: '/detail', component:  ItemDetail}
+    {path: '/', component: App,
+      children:[
+        {
+          path: 'detail',
+          component: ItemDetail
+        },
+        {
+          path: 'search',
+          component: Middle
+        }
+      ]
+    },
+    
   ]
 })
 

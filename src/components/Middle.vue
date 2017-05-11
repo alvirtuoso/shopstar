@@ -1,14 +1,17 @@
 <template>
-
+<div class="row">
+        <left></left>
 <div class="col-md-7">
   <div class="row" id="listcontainer">
       <div class="card">
           <ul class="list-group list-group-flush">
               <li class="list-group-item" v-for="(item, index) in itemList">
-                <h6>{{item.title}}</h6>
+                <router-link :to="{ path: 'detail'}">
+                  <h6>{{item.title}}</h6>
+                </router-link>
                 <label> {{item.price}}</label>
                 <img class="card-img-top" :src= "item.urlLargeImage" :alt="item.title">
-                <ave-review :urlReview="item.urlReview" ref="review"></ave-review>
+                <ave-review :item="item" ref="review"></ave-review>
 
                         <social-sharing :url="item.urlItemLink" inline-template>
                         <div>
@@ -29,8 +32,6 @@
 
               </li>
             </ul>
-           
-
       </div>
 
  </div>
@@ -39,7 +40,7 @@
      </b-pagination>
    </div>
 </div>
-
+</div>
 </template>
 
 <script> 
@@ -87,16 +88,7 @@ export default {
           }
           window.requestAnimationFrame(step);
       }
-      // onInfinite: function(){
-      //   setTimeout(() => {
-      //     const temp = [];
-      //     for (let i = this.itemList.length + 1; i <= this.itemList.length + 10; i++) {
-      //       temp.push(i);
-      //     }
-      //     // this.list = this.list.concat(temp);
-      //     this.$refs.infiniteLoading.$emit('$InfiniteLoading:loaded');
-      //   }, 1000);        
-      // }
+
 
   }
 }

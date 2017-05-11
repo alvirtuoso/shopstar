@@ -1,15 +1,16 @@
 <template>
-  
- <div class="col-md-2">
-    <div class="row justify-content-center">
-        <h6>Search History</h6>
+
+    <div class="col-md-2">
+        <div class="row justify-content-center">
+            <h6 v-if="searchList.length == 0">Search History</h6>
+        </div>
+        <div class="list-group padding-1">
+            <a href="#" v-for="word in searchList" :key="word.id" @click="search(word.keyword)" class="list-group-item list-group-item-action truncate-ellipsis" >
+                {{word.keyword}}
+            </a>
+        </div>
     </div>
-    <div class="list-group padding-1">
-        <a href="#" v-for="word in searchList" :key="word.id" @click="search(word.keyword)" class="list-group-item list-group-item-action truncate-ellipsis" >
-            {{word.keyword}}
-        </a>
-    </div>
- </div>
+ 
 </template>
 
 <script>
@@ -23,7 +24,7 @@
             }
         },  
         mounted(){
-            console.log('left keyworlist', this.searchList)
+
         },
         // props:['searchedWords'],
         methods:{

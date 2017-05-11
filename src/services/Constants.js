@@ -15,4 +15,5 @@
 // }
 export const API_BASE = `http://127.0.0.1:3000/api/amazon/`;
 export const ITEMS_URI = API_BASE + 'items/';
+export const ITEM_URI = API_BASE + 'item/';
 export const REVIEWS = API_BASE +  'reviews/';

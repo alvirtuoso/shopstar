@@ -25,13 +25,8 @@
         <br />
       </div>
       <div class="row">
-        <left></left>
-        <middle></middle>
+        <router-view></router-view>
       </div>
- 
-        <bottom></bottom>
-      
-
   </div>
 </template>
 
@@ -70,6 +65,7 @@ export default {
       this.$store.dispatch('SaveKeywordToArchive', {keyword: this.keyword, id: id})
       this.$store.dispatch('SetActivePage', 1);
       this.$localStorage.set('searchedWords', this.searchList);
+      this.$router.push({ path: 'search'});
     }
   }
 }
