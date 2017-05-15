@@ -1,17 +1,24 @@
 // The Vue build version to load with the `import` command
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue';
+
 import VueRx from 'vue-rx';
+import Vuex from 'vuex'
+import { sync } from 'vuex-router-sync';
+import VuexStore from './services/store'
+
 import App from './App';
 import BootstrapVue from 'bootstrap-vue';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap-vue/dist/bootstrap-vue.css';
+import '../node_modules/amazon-autocomplete/dist/amazon-autocomplete.min.js'
+
 import {fromPromise} from 'rxjs/observable/fromPromise';
 import {from} from 'rxjs/observable/from';
 
 import VueLazyload from 'vue-lazyload';
 import VueLocalStorage from 'vue-localstorage';
-import VueRouter from 'vue-router';
+import Router from 'vue-router';
 
 import CardList from './components/CardList';
 import AveReview from './components/AveReview';
@@ -20,10 +27,9 @@ import Bottom from './components/Bottom'
 import Left from './components/Left'
 import Right from './components/Right'
 import Middle from './components/Middle'
+import ItemTabs from './components/ItemTabs'
 import Icon from 'vue-awesome/components/Icon'
 
-import '../node_modules/amazon-autocomplete/dist/amazon-autocomplete.min.js'
-import { store } from './services/store'
 import 'vue-awesome/icons/facebook-square'
 import 'vue-awesome/icons/google-plus-square'
 import 'vue-awesome/icons/pinterest-square'
@@ -35,7 +41,8 @@ var SocialSharing = require('vue-social-sharing');
 Vue.config.productionTip = false;
 
 Vue.use(VueLocalStorage);
-Vue.use(VueRouter);
+Vue.use(Vuex)
+Vue.use(Router);
 Vue.use(VueRx);
 Vue.use(BootstrapVue);
 Vue.use(SocialSharing);
@@ -49,6 +56,7 @@ Vue.component('middle', Middle);
 Vue.component('ave-review', AveReview);
 Vue.component('icon', Icon);
 Vue.component('item-detail', ItemDetail);
+Vue.component('item-tabs', ItemTabs);
 
 Vue.use(VueLazyload, {
   preLoad: 1.3,
@@ -57,7 +65,7 @@ Vue.use(VueLazyload, {
   attempt: 1
 });
 
-const router = new VueRouter({
+export const router = new Router({
   mode: 'history',
   // base: __dirname,
   routes:[
@@ -65,7 +73,8 @@ const router = new VueRouter({
       children:[
         {
           path: 'detail',
-          component: ItemDetail
+          component: ItemDetail,
+          props: true
         },
         {
           path: 'search',
@@ -73,9 +82,14 @@ const router = new VueRouter({
         }
       ]
     },
-    
+    {
+      path: '/bottom', component: Bottom
+    },
   ]
 })
+const store = new Vuex.Store(VuexStore);
+
+// sync(store, router); 
 
 /* eslint-disable no-new */
 new Vue({

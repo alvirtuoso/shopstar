@@ -1,16 +1,14 @@
-import Vue from 'vue'
-import Vuex from 'vuex'
 import axios from 'axios'
 import { ITEMS_URI, ITEM_URI } from '../services/Constants'
-Vue.use(Vuex)
-const store = new Vuex.Store({
+import {router} from '../main';
+export default{
   state: {
     item: {},
     itemList:[],
     keywordList:[],
     keyword: '',
     currentPage: 1,
-    selectedItemId: ''
+    selectedItem: {}
   },
   mutations: {
     SetItemList: function(state, { list }){
@@ -25,12 +23,16 @@ const store = new Vuex.Store({
     SetCurrentPage: function(state, { pageNumber }){
         state.currentPage = pageNumber;
     },
-    SetSelectedItemId: function(state, { selectedItemId }){
-        state.selectedItemId = selectedItemId;
+    SetSelectedItem: function(state, { selectedItem }){
+        state.selectedItem = selectedItem;
+        console.log('Setselecteditem store', state.selectedItem)
+    },
+    SetSelectedItemAndGo: function(state, { selectedItem }){
+        state.selectedItem = selectedItem
     },
     ArchiveKeyword: function(state, { wordAndId }){
         var exists = false;
-        if(state.keywordList.length > 1){
+        if(state.keywordList.length > 0){
             for (var i = 0; i < state.keywordList.length; i++){
                 if(state.keywordList[i].keyword == wordAndId.keyword){
                     exists = true;
@@ -57,11 +59,23 @@ const store = new Vuex.Store({
     FetchItem({commit}, asin){
         axios.get(ITEM_URI + asin).then(resp => {
            if(resp.status == 200 && resp.data != 'server error'){
-                commit('SetItem', {item: resp.data})
+            //    console.log('hiFetchItem', resp.data)
+                // commit('SetItem', {item: resp.data})
+                commit('SetSelectedItemAndGo', {selectedItem: resp.data})
+                // Go to detail comp
+                router.push('detail')
            }
          }, (err) => {
              console.log("FetchItem error:", err)           
         })
+    },
+    SaveSelectedItem({commit}, selectedItem){
+        commit('SetSelectedItem', {selectedItem})
+    },
+    ViewItemDetail({commit}, selectedItem){
+        commit('SetSelectedItemAndGo', {selectedItem})
+        // Go to detail comp
+        router.push('detail')
     },
     UpdateKeyword({commit}, word){
         commit('SetKeyword', {keyword: word})
@@ -76,6 +90,4 @@ const store = new Vuex.Store({
         commit('SetSelectedItemId', { selectedItemId })
     }
   }
-})
-
-export { store };
+}

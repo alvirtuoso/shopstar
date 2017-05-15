@@ -6,9 +6,9 @@
       <div class="card">
           <ul class="list-group list-group-flush">
               <li class="list-group-item" v-for="(item, index) in itemList">
-                <router-link :to="{ path: 'detail'}">
-                  <h6>{{item.title}}</h6>
-                </router-link>
+                
+                  <h6 class="curso" @click="onViewItemDetail(item)">{{item.title}}</h6>
+               
                 <label> {{item.price}}</label>
                 <img class="card-img-top" :src= "item.urlLargeImage" :alt="item.title">
                 <ave-review :item="item" ref="review"></ave-review>
@@ -74,6 +74,10 @@ export default {
         this.$store.dispatch('SetActivePage', this.currentPage)
         this.scrollToTop(1000);
       },
+      onViewItemDetail: function(item){
+        console.log('Mid vue itemselected', item)
+         this.$store.dispatch('FetchItem', item.asin)
+      },
       scrollToTop(scrollDuration) {
           var cosParameter = window.scrollY / 2,
               scrollCount = 0,
@@ -103,7 +107,13 @@ export default {
 img{
   height: 160px;
 }
-
+.curso{
+  cursor:pointer;
+}
+h6:hover{
+    text-decoration:underline;
+    color:#ff9f1a;
+  }
 .title-collapse {
   font-weight: 500;
   height: 40px;

@@ -1,11 +1,16 @@
 <template>
-<label>{{computedStars}}</label>
+<div>
+    <label>{{computedStars}}</label>
+    <h5>{{averageStars}}</h5>
+</div>
 </template>
 <script>
 import AmazonSvc from '../services/AmazonSvc'
+import Mixin from '../helpers/mixin'
 import {REVIEWS} from '../services/Constants'
     export default{
         name: 'ave-review',
+        mixins: [Mixin],
         props: ['item'],
         mounted(){
 
@@ -13,20 +18,23 @@ import {REVIEWS} from '../services/Constants'
         data: function() {
             return {
                 urlData: this.item.urlReview,
-                aveStars: ''  
+                starLabel: '',
+                averageStars: 0
             }
         },
         computed:{
             computedStars: function(){
                 // return this.urlReviewIndex
-                // console.log('urlRevew', this.urlReview)
-                AmazonSvc.getItemAveReviews(this.item.urlReview)
+                // console.log('urlRevew', this.urlData)
+                AmazonSvc.getItemAveReviews(this.urlData)
                     .then(resp => { 
                         // this.$store.state.itemList[this.urlReviewIndex].starLabel = resp.data
-                            this.aveStars = resp.data
-                            this.item.starLabel = this.aveStars;
+                            this.starLabel = resp.data
+                            this.item.starLabel = this.starLabel
+                            this.averageStars = this.extractNumber(this.starLabel)
+                            this.item.averageStars = this.averageStars
                         })
-             return this.aveStars
+             return this.starLabel
                 // return   this.$store.state.itemList[this.urlReviewIndex].starLabel
             }
         }

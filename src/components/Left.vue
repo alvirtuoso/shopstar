@@ -1,16 +1,16 @@
 <template>
-
-    <div class="col-md-2">
+  <div class="container"
+    <div class="col-md-2 col-padding">
         <div class="row justify-content-center">
-            <h6 v-if="searchList.length == 0">Search History</h6>
+            <h6 v-if="searchList.length > 0">Search History</h6>
         </div>
-        <div class="list-group padding-1">
-            <a href="#" v-for="word in searchList" :key="word.id" @click="search(word.keyword)" class="list-group-item list-group-item-action truncate-ellipsis" >
+        <div class="list-group list-group-resize">
+            <a href="#" v-for="word in searchList" :key="word.id" @click="search(word.keyword)" class="list-group-item list-group-item-action resize truncate-ellipsis" >
                 {{word.keyword}}
             </a>
         </div>
     </div>
- 
+ </div>
 </template>
 
 <script>
@@ -38,13 +38,22 @@
 </script>
 
 <style scoped>
-.padding-1{
+.list-group-resize{
     padding-left: 1px !important;
+    font-size: .9rem;
+}
+.col-padding{
+    padding-left: 50px;
+    padding-right: 2px;
 }
 .col-overflow{
     overflow-y: scroll !important; 
 }
 
+.resize{
+    height: 30px;
+    padding: 5px 15px;
+}
 .truncate-ellipsis {
     display: table;
     table-layout: fixed;

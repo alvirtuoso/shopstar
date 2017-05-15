@@ -11,7 +11,7 @@
         </a>
 
         <div class="navbar-collapse collapse" id="navbar5">
-           
+            <input type="text" placeholder="Search" class="search-query">
             <div class="input-group w-50">
                 <input id="search-input-off" type="text" class="form-control" @keyup.enter="search" v-model="keyword" placeholder="Search">
                 <span class="input-group-btn">
@@ -23,6 +23,7 @@
       </nav>
       <div class="row">
         <br />
+       
       </div>
       <div class="row">
         <router-view></router-view>

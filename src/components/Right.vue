@@ -1,16 +1,16 @@
 <template>
-    <div class="col-md-4">
+    <div class="col-md-4 pad-40">
         <div class="card">
           <ul class="list-group list-group-flush">
             <li class="list-group-item pad-2" v-for="(item, index) in itemList">
-              <div class="row" @click="onSelectedItem(item.asin)">
-                <div class="col-5 curso">
+              <div class="row curso" @click="onSelectedItem(item)">
+                <div class="col-5">
                   <img class="card-img-top" :src= "item.urlMediumImage" :alt="item.title">
                 </div>
-                <div class="col-7 curso">
+                <div class="col-7">
                   <h6>{{item.title}}</h6>
                   <label> {{item.price}}</label>
-                  <label> {{item.starLabel}}</label>
+                  <label> {{item.averageStars}}</label>
                 </div>                
               </div>
             </li>
@@ -38,8 +38,10 @@ import InfiniteLoading from 'vue-infinite-loading';
       }
     },
     methods:{
-      onSelectedItem: function(asin){
-         this.$store.dispatch('FetchItem', asin)
+      onSelectedItem: function(item){
+        console.log('Rvue itemselected', item)
+         this.$store.dispatch('FetchItem', item.asin)
+                      
       },
       // onInfinite: function(){
       //   setTimeout(() => {
@@ -58,7 +60,14 @@ import InfiniteLoading from 'vue-infinite-loading';
     .curso{
        cursor:pointer;
     }
+    .curso:hover{
+      color:#167ac6;
+    }
     .pad-2{
       padding:2px;
+    }
+    .pad-40{
+      padding-right:40px;
+      padding-left:1px;
     }
 </style>

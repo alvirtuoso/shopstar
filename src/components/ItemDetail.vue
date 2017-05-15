@@ -1,93 +1,120 @@
 <template>
-  <div class="row">
-     <div class="col-md-8 margin-50">
-		<div class="card">
-			<div class="container-fliud">
-				<div class="wrapper row">
-					<div class="preview col-md-6">
-						
-						<div class="preview-pic tab-content">
-						  <div class="tab-pane active" id="pic-1"><img src="https://images-na.ssl-images-amazon.com/images/I/51V-yvQL6xL.jpg" /></div>
-						  <div class="tab-pane" id="pic-2"><img src="http://placekitten.com/400/252" /></div>
-						  <div class="tab-pane" id="pic-3"><img src="http://placekitten.com/400/252" /></div>
-						  <div class="tab-pane" id="pic-4"><img src="http://placekitten.com/400/252" /></div>
-						  <div class="tab-pane" id="pic-5"><img src="http://placekitten.com/400/252" /></div>
-						</div>
-						<ul class="preview-thumbnail nav nav-tabs">
-						  <li class="active"><a data-target="#pic-1" data-toggle="tab"><img src="http://placekitten.com/200/126" /></a></li>
-						  <li><a data-target="#pic-2" data-toggle="tab"><img src="https://images-na.ssl-images-amazon.com/images/I/51V-yvQL6xL._SL75_.jpg" /></a></li>
-						  <li><a data-target="#pic-3" data-toggle="tab"><img src="http://placekitten.com/200/126" /></a></li>
-						  <li><a data-target="#pic-4" data-toggle="tab"><img src="http://placekitten.com/200/126" /></a></li>
-						  <li><a data-target="#pic-5" data-toggle="tab"><img src="http://placekitten.com/200/126" /></a></li>
-						</ul>
-						
-					</div>
-					<div class="details col-md-6">
-						<h6 class="product-title">{{itemData.title}}</h6>
-						<div class="rating">
-							<div class="stars">
-								 <icon name="star" color="#ff9f1a" cursor="pointer" ></icon>
-								 <icon name="star" color="#ff9f1a" cursor="pointer" ></icon>
-								 <icon name="star" color="#ff9f1a" cursor="pointer" ></icon>
-								 <icon name="star" color="#ff9f1a" cursor="pointer" ></icon>
-								 <icon name="star-half" color="#ff9f1a" cursor="pointer" ></icon>
-							</div>
-							<span class="review-no">41 reviews</span>
-						</div>
-						<p class="product-description">Her we go okokoko this is great for testing the space .</p>
-						<h4> Price: <span>$180</span></h4>
+<div>
+    <div class="row">
+        <div class="col-md-8">
+            <div class="card">
 
-						<div class="action">
-							<button class="add-to-cart btn btn-default" type="button">add to cart</button>
-						</div>
-                        <br/>
-                        <ul class="nav">
+                    <div class="wrapper row">
+                        <div class="preview col-md-10">
 
-                            <social-sharing url="www.shopping45" inline-template>
-                            <div>
-                                <network network="facebook">
-                                    <icon name="facebook-square" color="#3B5998" cursor="pointer" scale="2"></icon>
-                                
-                                </network>
-                                <network network="googleplus">
-                                <icon name="google-plus-square" color="#DD4B39" cursor="pointer" scale="2"></icon>
-                                </network>
-                                <network network="pinterest">
-                                <icon name="pinterest-square" color="#CC2127" cursor="pointer" scale="2"></icon>
-                                </network>
-                                <network network="twitter">
-                                <icon name="twitter-square" color="#55ACEE" cursor="pointer" scale="2"></icon>
-                                </network>
+                            <div class="preview-pic tab-content">
+                                <div class="tab-pane" :class="{active: imgLink === activeImage}"
+                                    v-for="(imgLink, index) in itemSelected.itemImages">
+                                    <img :src="imgLink.urlLargeImage" />
+                                </div>
+
                             </div>
-                            </social-sharing>
+                            <ul class="preview-thumbnail nav nav-tabs">
 
-                        </ul>
-					</div>
-				</div>
-			</div>
-		</div>
-  </div>
-  <right></right>
+                                <li class="thumb" v-for="(imgLink, index) in itemSelected.itemImages">
+                                  <a @click="onThumbnailClick(imgLink)" :data-target="'#' + index" data-toggle="tab">
+                                    <img :class="{activeThumb: activeImage === imgLink}" :src="imgLink.urlThumbnail" />
+                                  </a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="details col-md-2">
+
+                            <div class="rating">
+                                <div class="stars">
+                                    <icon name="star" color="#ff9f1a" cursor="pointer" ></icon>
+                                    <icon name="star" color="#ff9f1a" cursor="pointer" ></icon>
+                                    <icon name="star" color="#ff9f1a" cursor="pointer" ></icon>
+                                    <icon name="star" color="#ff9f1a" cursor="pointer" ></icon>
+                                    <icon name="star-half" color="#ff9f1a" cursor="pointer" ></icon>
+                                </div>
+                                <span class="review-no">{{itemSelected.starLabel}}</span>
+                            </div>
+
+                            <h5> Price: <span>{{itemSelected.price}}</span></h5>
+
+                                <button class="add-to-cart btn btn-success" type="button">add to cart</button>
+
+                            <br/>
+                            <ul class="nav">
+
+                                <social-sharing :url="itemSelected.urlItemLink" inline-template>
+                                <div>
+                                    <network network="facebook">
+                                        <icon name="facebook-square" color="#3B5998" cursor="pointer" scale="1.75"></icon>
+
+                                    </network>
+                                    <network network="googleplus">
+                                    <icon name="google-plus-square" color="#DD4B39" cursor="pointer" scale="1.75"></icon>
+                                    </network>
+                                    <network network="pinterest">
+                                    <icon name="pinterest-square" color="#CC2127" cursor="pointer" scale="1.75"></icon>
+                                    </network>
+                                    <network network="twitter">
+                                    <icon name="twitter-square" color="#55ACEE" cursor="pointer" scale="1.75"></icon>
+                                    </network>
+                                </div>
+                                </social-sharing>
+
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer text-center">
+                    <h6>{{itemSelected.title}}</h6>
+                </div>
+
+                  <item-tabs></item-tabs>
+      </div>
+      <right></right>
+    </div>
 </div>
 </template>
 <script>
 export default {
     name: 'item-detail',
     mounted(){
-        // this.$root.$emit('show::modal','modalItem')
-        // console.log('aalist', this.$store.state.itemList);
+        // show default image the first time detail page is open/mounted
+      this.activeImage = this.defaultImageSelected;
+    },
+    updated(){
+        // When user starts clicking thumbnail to show corresponding large image, update cycle is fired
+        // so use this.isActive flag so that the default image no longer active
+        if(!this.isActive){
+            this.activeImage = this.defaultImageSelected;
+        }
     },
     data: function(){
         return{
-
+            isActive: false,
+            activeImage: null
         }
     },
     computed: {
         aList: function(){
             return  this.$store.state.keywordList;
         },
-        itemData: function(){
-            return this.$store.state.item;
+        // this item is passed on from Middle.vue and Right.vue
+        itemSelected: function(){
+            this.isActive = false
+            return this.$store.state.selectedItem
+        },
+        defaultImageSelected: function(){
+            if(this.itemSelected && this.itemSelected.itemImages.length > 0){
+                // console.log('ItemDetail defaultImage',this.itemSelected.itemImages[0])
+                return this.itemSelected.itemImages[0]
+            }
+        }
+    },
+    methods:{
+        onThumbnailClick: function(imgLink){
+            this.isActive = true
+            return this.activeImage = imgLink
         }
     }
 }
@@ -97,8 +124,21 @@ export default {
   width: 90%;
 
 }
+.activeThumb{
+    border-width: 6px;
+    border-color: #ffcc66;
+    border-style: solid;
+}
+.thumb:hover{
+    cursor:pointer
+}
 .margin-50{
-    margin-top: -50px;
+    margin-top:-50px;
+    padding-right: 5px;
+}
+.margin-tab{
+    margin-top: 2px;
+    padding-right: 5px;
 }
 .preview {
   display: -webkit-box;
@@ -145,9 +185,7 @@ export default {
             animation-duration: .3s; }
 
 .card {
-  margin-top: 50px;
-  background: #eee;
-  padding: 3em;
+  padding: 1em 3em;
   line-height: 1.5em; }
 
 @media screen and (min-width: 997px) {
@@ -204,10 +242,9 @@ export default {
 
 .add-to-cart, .like {
   background: #ff9f1a;
-  padding: 1.2em 1.5em;
   border: none;
+  font-size: 12px;
   text-transform: UPPERCASE;
-  font-weight: bold;
   color: #fff;
   -webkit-transition: background .3s ease;
           transition: background .3s ease; }
