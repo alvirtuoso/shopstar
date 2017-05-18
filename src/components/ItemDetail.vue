@@ -33,11 +33,10 @@
                                     <icon name="star" color="#ff9f1a" cursor="pointer" ></icon>
                                     <icon name="star-half" color="#ff9f1a" cursor="pointer" ></icon>
                                 </div>
-                                <span class="review-no">{{itemSelected.starLabel}}</span>
+                                
                             </div>
 
                             <h5> Price: <span>{{itemSelected.price}}</span></h5>
-
                                 <button class="add-to-cart btn btn-success" type="button">add to cart</button>
 
                             <br/>
@@ -92,23 +91,28 @@ export default {
     data: function(){
         return{
             isActive: false,
-            activeImage: null
+            activeImage: null,
+            test: "hereee"
         }
     },
     computed: {
-        aList: function(){
-            return  this.$store.state.keywordList;
-        },
         // this item is passed on from Middle.vue and Right.vue
         itemSelected: function(){
             this.isActive = false
             return this.$store.state.selectedItem
         },
         defaultImageSelected: function(){
-            if(this.itemSelected && this.itemSelected.itemImages.length > 0){
+            if(this.itemSelected && this.itemSelected.itemImages && this.itemSelected.itemImages.length > 0){
                 // console.log('ItemDetail defaultImage',this.itemSelected.itemImages[0])
                 return this.itemSelected.itemImages[0]
             }
+        },
+        featuresText: function(){
+            var txt = "";
+            for(var i = 0; i < this.itemSelected.features.length; i++){
+                txt = txt + '<p>' + this.itemSelected.features[i] + '</p>'
+            }
+            return txt;
         }
     },
     methods:{

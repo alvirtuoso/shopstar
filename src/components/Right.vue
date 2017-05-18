@@ -9,8 +9,14 @@
                 </div>
                 <div class="col-7">
                   <h6>{{item.title}}</h6>
-                  <label> {{item.price}}</label>
-                  <label> {{item.averageStars}}</label>
+                  <div class="row padding-5l">
+                    {{item.price}}
+                    <div class="stars">
+                      <icon name="star" color="#ff9f1a" cursor="pointer" ></icon>
+                    </div>
+                  </div>
+                 
+                  <p v-if="item.isPrimeEligible" class="font-italic font-weight-bold prime">Prime Eligible</p>
                 </div>                
               </div>
             </li>
@@ -20,6 +26,16 @@
 </template>
 
 <script> 
+                            // <div class="rating">  <label> {{item.averageStars}}</label>
+                            //     <div class="stars">
+                            //         <icon name="star" color="#ff9f1a" cursor="pointer" ></icon>
+                            //         <icon name="star" color="#ff9f1a" cursor="pointer" ></icon>
+                            //         <icon name="star" color="#ff9f1a" cursor="pointer" ></icon>
+                            //         <icon name="star" color="#ff9f1a" cursor="pointer" ></icon>
+                            //         <icon name="star-half" color="#ff9f1a" cursor="pointer" ></icon>
+                            //     </div>
+                                
+                            // </div>
 // this.$store.dispatch('SetActivePage', this.currentPage)
 // <infinite-loading :on-infinite="onInfinite" ref="infiniteLoading"></infinite-loading>
 import AmazonSvc from '../services/AmazonSvc';
@@ -28,10 +44,6 @@ import InfiniteLoading from 'vue-infinite-loading';
   export default {
     name: 'right',
     // mixins: [Mixin],
-    mounted(){
-        // this.$root.$emit('show::modal','modalItem')
-        // console.log('rightvue list', this.$store.state.itemList);
-    },
     computed:{
       itemList: function(){
         return this.$store.state.itemList
@@ -39,9 +51,8 @@ import InfiniteLoading from 'vue-infinite-loading';
     },
     methods:{
       onSelectedItem: function(item){
-        console.log('Rvue itemselected', item)
+        // console.log('elee',typeof this.$store.state.itemList[0].isPrimeEligible);
          this.$store.dispatch('FetchItem', item.asin)
-                      
       },
       // onInfinite: function(){
       //   setTimeout(() => {
@@ -57,11 +68,20 @@ import InfiniteLoading from 'vue-infinite-loading';
   }
 </script>
 <style scoped>
+    .padding-5l{
+      padding-left: 1em;
+    }
+    .stars{
+      padding-left: 1em;
+    }
     .curso{
        cursor:pointer;
     }
     .curso:hover{
       color:#167ac6;
+    }
+    .prime{
+      color: #167ac6;
     }
     .pad-2{
       padding:2px;

@@ -1,6 +1,5 @@
 <template>
   <div>
-  
       <nav class="navbar navbar-toggleable-md navbar-light bg-faded">
         <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
@@ -32,7 +31,7 @@
 </template>
 
 <script>
-
+//<div class="star-rating"><star-rating :rating="3.5" :star-size="20" :read-only="true" :increment="0.01"></star-rating>
 import Mixin from './helpers/mixin.js'
 import { mapState } from 'vuex'
 
@@ -79,8 +78,12 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;
 }
+.star-rating{
 
+}
+.star{
 
+}
 
 
 

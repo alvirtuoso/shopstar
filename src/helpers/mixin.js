@@ -10,7 +10,7 @@ export default {
             .toString(16)
             .substring(1);
         },
-
+        // str ex. 4.5 of 5 stars
         extractNumber: function(str){
             var regex = /[+-]?\d+(\.\d+)?/g;
             var valmatch = str.match(regex);

@@ -30,6 +30,8 @@ import Middle from './components/Middle'
 import ItemTabs from './components/ItemTabs'
 import Icon from 'vue-awesome/components/Icon'
 
+import StarRating from 'vue-star-rating'
+
 import 'vue-awesome/icons/facebook-square'
 import 'vue-awesome/icons/google-plus-square'
 import 'vue-awesome/icons/pinterest-square'
@@ -40,6 +42,7 @@ var SocialSharing = require('vue-social-sharing');
 
 Vue.config.productionTip = false;
 
+Vue.component('star-rating', StarRating);
 Vue.use(VueLocalStorage);
 Vue.use(Vuex)
 Vue.use(Router);

@@ -1,11 +1,14 @@
 <template>
   <div class="container"
-    <div class="col-md-2 col-padding">
+    <div class="col-md-3 col-padding">
         <div class="row justify-content-center">
             <h6 v-if="searchList.length > 0">Search History</h6>
         </div>
         <div class="list-group list-group-resize">
-            <a href="#" v-for="word in searchList" :key="word.id" @click="search(word.keyword)" class="list-group-item list-group-item-action resize truncate-ellipsis" >
+            <a @mouseover="active = true" @mouseleave="active = false" href="#" v-for="word in searchList" :key="word.id" @click="search(word.keyword)" class="list-group-item list-group-item-action resize truncate-ellipsis" >
+                <button @click="removeKeyword(word)" type="button" class="close" aria-label="Close">
+                    <span v-if="active" aria-hidden="true">&times;</span>
+                </button>
                 {{word.keyword}}
             </a>
         </div>
@@ -20,11 +23,9 @@
         data(){
             return {
                 msg: 'Hellow World of testing',
-                searchList: this.$store.state.keywordList
+                searchList: this.$store.state.keywordList,
+                active: false
             }
-        },  
-        mounted(){
-
         },
         // props:['searchedWords'],
         methods:{
@@ -32,6 +33,10 @@
                 this.$store.dispatch('FetchData', {keyword: keyword , page: 1});
                 this.$store.dispatch('UpdateKeyword', keyword);
                 this.$store.dispatch('SetActivePage', 1)
+            },
+            removeKeyword(keyword){
+                // Dispatch removeKeyword action
+                this.$store.dispatch('RemoveKeyword', keyword);
             }
         }
     }
