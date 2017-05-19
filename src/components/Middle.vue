@@ -25,7 +25,10 @@
                 <div class="product-info smart-form">
                   <div class="row">
                       <p class="description">
-                        <star-rating :rating="3.8" :star-size="25" :read-only="true" :increment="0.01"></star-rating>
+                        <ave-review :item="item" ref="review"></ave-review>
+                        <span v-if="item.isPrimeEligible" class="font-italic font-weight-bold prime">
+                          Prime Eligible
+                        </span>
                       </p>
                   </div>
                   <div class="row">
@@ -133,6 +136,10 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 
 <style scoped>
+    .prime{
+      color: #167ac6;
+      font-size: 15px;
+    }
 img{
   height: 200px;
 }

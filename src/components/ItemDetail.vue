@@ -26,14 +26,7 @@
                         <div class="details col-md-2">
 
                             <div class="rating">
-                                <div class="stars">
-                                    <icon name="star" color="#ff9f1a" cursor="pointer" ></icon>
-                                    <icon name="star" color="#ff9f1a" cursor="pointer" ></icon>
-                                    <icon name="star" color="#ff9f1a" cursor="pointer" ></icon>
-                                    <icon name="star" color="#ff9f1a" cursor="pointer" ></icon>
-                                    <icon name="star-half" color="#ff9f1a" cursor="pointer" ></icon>
-                                </div>
-                                
+                                <ave-review :item="itemSelected" ref="review"></ave-review>
                             </div>
 
                             <h5> Price: <span>{{itemSelected.price}}</span></h5>
@@ -124,6 +117,9 @@ export default {
 }
 </script>
 <style scoped>
+.prime{
+      color: #167ac6;
+}
 .modal-90 {
   width: 90%;
 
@@ -249,6 +245,8 @@ export default {
   border: none;
   font-size: 12px;
   text-transform: UPPERCASE;
+  min-height: 50px;
+  padding: 3px; 
   color: #fff;
   -webkit-transition: background .3s ease;
           transition: background .3s ease; }

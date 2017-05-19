@@ -1,10 +1,11 @@
 <template>
-<div>
-   {{computedStars}}
+<div class="star-rating">
+ <star-rating :rating="computedStars" :star-size="20" :read-only="true" :increment="0.01"></star-rating>
+
 </div>
 </template>
 <script>
-//  <star-rating :rating="computedStars"  :star-size="30" :read-only="true" :increment="0.01"></star-rating>
+
 import AmazonSvc from '../services/AmazonSvc'
 import Mixin from '../helpers/mixin'
 import {REVIEWS} from '../services/Constants'
@@ -34,9 +35,14 @@ import {REVIEWS} from '../services/Constants'
                             this.averageStars = this.extractNumber(this.starLabel)
                             this.item.averageStars = this.averageStars
                         })
-             return this.starLabel;
+             return this.averageStars;
                 // return   this.$store.state.itemList[this.urlReviewIndex].starLabel
             }
         }
     }
 </script>
+<<style scoped>
+.star-rating{
+
+}
+</style>

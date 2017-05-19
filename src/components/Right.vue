@@ -8,11 +8,11 @@
                   <img class="card-img-top" :src= "item.urlMediumImage" :alt="item.title">
                 </div>
                 <div class="col-7">
-                  <h6>{{item.title}}</h6>
+                  <h6 class="price">{{item.title}}</h6>
                   <div class="row padding-5l">
-                    {{item.price}}
-                    <div class="stars">
-                      <icon name="star" color="#ff9f1a" cursor="pointer" ></icon>
+                    <span class="price-label">{{item.price}}</span>
+                    <div class="ml-4">
+                      <ave-review :item="item" ref="review"></ave-review>
                     </div>
                   </div>
                  
@@ -26,17 +26,6 @@
 </template>
 
 <script> 
-                            // <div class="rating">  <label> {{item.averageStars}}</label>
-                            //     <div class="stars">
-                            //         <icon name="star" color="#ff9f1a" cursor="pointer" ></icon>
-                            //         <icon name="star" color="#ff9f1a" cursor="pointer" ></icon>
-                            //         <icon name="star" color="#ff9f1a" cursor="pointer" ></icon>
-                            //         <icon name="star" color="#ff9f1a" cursor="pointer" ></icon>
-                            //         <icon name="star-half" color="#ff9f1a" cursor="pointer" ></icon>
-                            //     </div>
-                                
-                            // </div>
-// this.$store.dispatch('SetActivePage', this.currentPage)
 // <infinite-loading :on-infinite="onInfinite" ref="infiniteLoading"></infinite-loading>
 import AmazonSvc from '../services/AmazonSvc';
 // import Mixin from '../helpers/mixin.js';
@@ -68,6 +57,10 @@ import InfiniteLoading from 'vue-infinite-loading';
   }
 </script>
 <style scoped>
+  .price-label{
+    color:#900;
+    font-weight:bold;
+  }
     .padding-5l{
       padding-left: 1em;
     }
