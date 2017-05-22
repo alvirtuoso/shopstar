@@ -1,89 +1,30 @@
-<template id="test">
-<div>
-      <div id="search">
-           <star-rating :rating="3.8" :star-size="25" :read-only="true" :increment="0.01"></star-rating>
+<template>
+
+      <div class="container-fluid">
         <input type="text" id="search-input"/> 
       </div>
 
-<div class="container-fluid">
-  <div class="row">
-    <left></left>  
-    <div class="col-xs-12 col-md-8 bootstrap snippets">
-        <div  v-for="(item, index) in itemList" class="product-content product-wrap clearfix">
-            <div class="row">
-                <div class="col-md-5 col-sm-12 col-xs-12">
-                <div @click="onViewItemDetail(item)" class="product-image curso"> 
-                    <img :src= "item.urlLargeImage" alt="No Image Available" class="img-responsive"> 
-                    <span class="tag2 hot">
-                      {{item.price}}
-                    </span>
-                </div>
-                </div>
-                <div class="col-md-7 col-sm-12 col-xs-12">
-                <div class="product-deatil">
-                    <ul class="curso">
-                      <li @click="onViewItemDetail(item)">
-                       <h6 class="name"> {{item.title}} </h6>
-                      </li>
-               
-                    </ul>
-                </div>
-                <div class="product-info smart-form">
-                <div class="row">
-                    <div class="col-md-6 col-sm-6 col-xs-6"> 
-                    <a href="javascript:void(0);" class="btn orange-color">Add to cart</a>
-                    </div>
-                    <div class="col-md-6 col-sm-6 col-xs-6">
-                    <div class="rating">
-                                <social-sharing :url="item.urlItemLink" inline-template>
-                                <div>
-                                    <network network="facebook">
-                                        <icon name="facebook-square" color="#3B5998" cursor="pointer" scale="2"></icon>
-                                    </network>
-                                    <network network="googleplus">
-                                    <icon name="google-plus-square" color="#DD4B39" cursor="pointer" scale="2"></icon>
-                                    </network>
-                                    <network network="pinterest">
-                                    <icon name="pinterest-square" color="#CC2127" cursor="pointer" scale="2"></icon>
-                                    </network>
-                                    <network network="twitter">
-                                    <icon name="twitter-square" color="#55ACEE" cursor="pointer" scale="2"></icon>
-                                    </network>
-                                </div>
-                                </social-sharing>
-                    </div>
-                    </div>
-                </div>
-                </div>
-            </div>
-            </div>
-        </div>
-
-
-    </div>
-  </div> 
-
-  <div v-if="itemList.length > 1" class="row justify-content-center">
-      <b-pagination size="md" v-on:input="pageChanged" :total-rows="50" v-model="currentPage" :per-page="10">
-      </b-pagination>
-  </div>
-
-</div>
-
-
-</div>
 </template>
 <script>
 
 export default{
     name: 'test',
     template: '#test',
-    created(){
-        
+    mounted(){
+        this.searchInput = new AmazonAutocomplete('#search-input'); 
     },
     data: function(){
         return{
-            adata: 'Hello Tester'
+            adata: 'Hello Tester',
+            searchInput: null
+        }
+    },
+    methods:{
+        onSelectedWord: function(){
+        //Log the selected word to the console
+        this.searchInput.onSelectedWord(word => console.log(`searching for ${word}...`));
+        // console.log('searchInput', this.searchInput)
+
         }
     }
 }

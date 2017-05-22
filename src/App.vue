@@ -41,7 +41,7 @@ export default {
     'itemList'
   ]),
   mounted(){
-    // this.searchInput = new AmazonAutocomplete('#search-input'); 
+    this.searchInput = new AmazonAutocomplete('#search-input'); 
   },
   props:{
     items:[]
@@ -68,8 +68,8 @@ export default {
     },
     onSelectedWord: function(){
       //Log the selected word to the console
-      // this.searchInput.onSelectedWord(word => console.log(`searching for ${word}...`));
-      // console.log('searchInput', this.searchInput)
+      this.searchInput.onSelectedWord(word => console.log(`searching for ${word}...`));
+      console.log('searchInput', this.searchInput)
     }
   }
 }
@@ -83,19 +83,25 @@ export default {
   color: #2c3e50;
 }
 
-.ac__container{
-      position: relative;
-    display: block;
-    left: -170px;
-    top: 40px;
-}
+/* Words container */
 .ac__inner{
-    background: #f6f6f6;
-    
+    background: #fafafa;
 }
+
+/* Individual word element */
+.ac__word{
+    margin: 0;
+    padding: 5px;
+}
+
+/* Word prefix style. It’s the span containing the
+search keyword within the word. */
 .ac__prefix{
     font-weight: bold;
 }
+
+/* Style applied to each words while navigating through
+the list or on hover */
 .ac__word--selected, .ac__word:hover{
     background-color: #e3e3e3;
 }

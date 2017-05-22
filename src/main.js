@@ -20,6 +20,7 @@ import VueLazyload from 'vue-lazyload';
 import VueLocalStorage from 'vue-localstorage';
 import Router from 'vue-router';
 
+import Test from './components/Test';
 import CardList from './components/CardList';
 import AveReview from './components/AveReview';
 import ItemDetail from './components/ItemDetail';
@@ -52,6 +53,7 @@ Vue.use(VueRx);
 Vue.use(BootstrapVue);
 Vue.use(SocialSharing);
 
+Vue.component('test', Test);
 Vue.component('app', App);
 Vue.component('bottom', Bottom)      // global registration
 Vue.component('card-list', CardList ); // register component globally
@@ -91,6 +93,9 @@ export const router = new Router({
     {
       path: '/bottom', component: Bottom
     },
+    {
+      path: '/test', component: Test
+    }
   ]
 })
 const store = new Vuex.Store(VuexStore);
