@@ -5,11 +5,11 @@
             <h6 v-if="searchList.length > 0">Search History</h6>
         </div>
         <div class="list-group list-group-resize">
-            <a @mouseover="active = true" @mouseleave="active = false" href="#" v-for="word in searchList" :key="word.id" @click="search(word.keyword)" class="list-group-item list-group-item-action resize truncate-ellipsis" >
-                <button @click="removeKeyword(word)" type="button" class="close" aria-label="Close">
+            <a @mouseover="active = true ;unArchiveOnly = false" @mouseleave="active = false" href="#" v-for="word in searchList" :key="word.id" @click="search(word.keyword)" class="list-group-item list-group-item-action resize truncate-ellipsis" >
+                {{word.keyword}}
+                <button @click="removeKeyword(word.keyword)" type="button" class="close" aria-label="Close">
                     <span v-if="active" aria-hidden="true">&times;</span>
                 </button>
-                {{word.keyword}}
             </a>
         </div>
     </div>
@@ -24,17 +24,21 @@
             return {
                 msg: 'Hellow World of testing',
                 searchList: this.$store.state.keywordList,
-                active: false
+                active: false,
+                unArchiveOnly: false
             }
         },
         // props:['searchedWords'],
         methods:{
             search(keyword){
-                this.$store.dispatch('FetchData', {keyword: keyword , page: 1});
-                this.$store.dispatch('UpdateKeyword', keyword);
-                this.$store.dispatch('SetActivePage', 1)
+                if(!this.unArchiveOnly){
+                    this.$store.dispatch('FetchData', {keyword: keyword , page: 1});
+                    this.$store.dispatch('UpdateKeyword', keyword);
+                    this.$store.dispatch('SetActivePage', 1)
+                }
             },
             removeKeyword(keyword){
+                this.unArchiveOnly = true;
                 // Dispatch removeKeyword action
                 this.$store.dispatch('RemoveKeyword', keyword);
             }

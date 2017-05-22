@@ -9,15 +9,10 @@
                 </div>
                 <div class="col-7">
                   <h6 class="price">{{item.title}}</h6>
-                  <div class="row padding-5l">
-                    <span class="price-label">{{item.price}}</span>
-                    <div class="ml-4">
+                      <price :item="item"></price>
                       <ave-review :item="item" ref="review"></ave-review>
-                    </div>
-                  </div>
-                 
-                  <p v-if="item.isPrimeEligible" class="font-italic font-weight-bold prime">Prime Eligible</p>
-                </div>                
+                    <p v-if="item.isPrimeEligible" class="font-italic font-weight-bold prime">Prime Eligible</p>
+                </div>
               </div>
             </li>
           </ul>

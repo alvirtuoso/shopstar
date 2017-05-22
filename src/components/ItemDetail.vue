@@ -5,7 +5,7 @@
             <div class="card">
 
                     <div class="wrapper row">
-                        <div class="preview col-md-10">
+                        <div class="preview col-md-9">
 
                             <div class="preview-pic tab-content">
                                 <div class="tab-pane" :class="{active: imgLink === activeImage}"
@@ -23,14 +23,14 @@
                                 </li>
                             </ul>
                         </div>
-                        <div class="details col-md-2">
+                        <div class="details col-md-3 pading-detail">
 
+                            <price :item="itemSelected"></price>
                             <div class="rating">
                                 <ave-review :item="itemSelected" ref="review"></ave-review>
                             </div>
 
-                            <h5> Price: <span>{{itemSelected.price}}</span></h5>
-                                <button class="add-to-cart btn btn-success" type="button">add to cart</button>
+                            <button class="add-to-cart btn btn-success" type="button">add to cart</button>
 
                             <br/>
                             <ul class="nav">
@@ -178,7 +178,6 @@ export default {
 .tab-content {
   overflow: hidden; }
   .tab-content img {
-    width: 100%;
     -webkit-animation-name: opacity;
             animation-name: opacity;
     -webkit-animation-duration: .3s;
@@ -246,6 +245,7 @@ export default {
   font-size: 12px;
   text-transform: UPPERCASE;
   min-height: 50px;
+  max-width: 110px;
   padding: 3px; 
   color: #fff;
   -webkit-transition: background .3s ease;

@@ -27,7 +27,9 @@ import Bottom from './components/Bottom'
 import Left from './components/Left'
 import Right from './components/Right'
 import Middle from './components/Middle'
+import Price from './components/Price'
 import ItemTabs from './components/ItemTabs'
+
 import Icon from 'vue-awesome/components/Icon'
 
 import StarRating from 'vue-star-rating'
@@ -59,6 +61,7 @@ Vue.component('middle', Middle);
 Vue.component('ave-review', AveReview);
 Vue.component('icon', Icon);
 Vue.component('item-detail', ItemDetail);
+Vue.component('price', Price);
 Vue.component('item-tabs', ItemTabs);
 
 Vue.use(VueLazyload, {

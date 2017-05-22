@@ -8,9 +8,6 @@
                 <div class="col-md-5 col-sm-12 col-xs-12">
                 <div @click="onViewItemDetail(item)" class="product-image curso"> 
                     <img :src= "item.urlLargeImage" alt="No Image Available" class="img-responsive"> 
-                    <span class="tag2">
-                      {{item.price}}
-                    </span>
                 </div>
                 </div>
                 <div class="col-md-7 col-sm-12 col-xs-12">
@@ -24,7 +21,9 @@
                 </div>
                 <div class="product-info smart-form">
                   <div class="row">
+
                       <p class="description">
+                        <price :item="item"></price>
                         <ave-review :item="item" ref="review"></ave-review>
                         <span v-if="item.isPrimeEligible" class="font-italic font-weight-bold prime">
                           Prime Eligible
@@ -136,10 +135,10 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 
 <style scoped>
-    .prime{
-      color: #167ac6;
-      font-size: 15px;
-    }
+.prime{
+  color: #167ac6;
+  font-size: 15px;
+}
 img{
   height: 200px;
 }

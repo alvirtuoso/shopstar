@@ -10,9 +10,8 @@
         </a>
 
         <div class="navbar-collapse collapse" id="navbar5">
-            <input type="text" placeholder="Search" class="search-query">
             <div class="input-group w-50">
-                <input id="search-input-off" type="text" class="form-control" @keyup.enter="search" v-model="keyword" placeholder="Search">
+                <input id="search-input"  type="text" class="form-control" @keyup.enter="search" v-model="keyword" placeholder="Search">
                 <span class="input-group-btn">
                 <button class="btn btn-outline-warning" v-on:click="search" type="button">GO</button>
               </span>
@@ -22,7 +21,7 @@
       </nav>
       <div class="row">
         <br />
-       
+        
       </div>
       <div class="row">
         <router-view></router-view>
@@ -31,7 +30,7 @@
 </template>
 
 <script>
-//<div class="star-rating"><star-rating :rating="3.5" :star-size="20" :read-only="true" :increment="0.01"></star-rating>
+
 import Mixin from './helpers/mixin.js'
 import { mapState } from 'vuex'
 
@@ -42,8 +41,7 @@ export default {
     'itemList'
   ]),
   mounted(){
-    // console.log('store searchList at Appvue:', this.searchList[0]) // -> 1
-    // let searchInput = new AmazonAutocomplete('#search-input'); 
+    // this.searchInput = new AmazonAutocomplete('#search-input'); 
   },
   props:{
     items:[]
@@ -52,7 +50,8 @@ export default {
     return{
       // itemList: [],
       searchList: this.$store.state.keywordList, // used to hold search keywords for the "search history" feature
-      keyword: ''
+      keyword: '',
+      searchInput: null
     }
   },
   methods: {
@@ -66,17 +65,39 @@ export default {
       this.$store.dispatch('SetActivePage', 1);
       this.$localStorage.set('searchedWords', this.searchList);
       this.$router.push({ path: 'search'});
+    },
+    onSelectedWord: function(){
+      //Log the selected word to the console
+      // this.searchInput.onSelectedWord(word => console.log(`searching for ${word}...`));
+      // console.log('searchInput', this.searchInput)
     }
   }
 }
 </script>
 
-<style scoped>
+<style>
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;
+}
+
+.ac__container{
+      position: relative;
+    display: block;
+    left: -170px;
+    top: 40px;
+}
+.ac__inner{
+    background: #f6f6f6;
+    
+}
+.ac__prefix{
+    font-weight: bold;
+}
+.ac__word--selected, .ac__word:hover{
+    background-color: #e3e3e3;
 }
 
 </style>

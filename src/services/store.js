@@ -43,7 +43,17 @@ export default{
         if(!exists){
             state.keywordList.push(wordAndId)
         }
-    }
+    },
+    UnArchiveKeyword: function(state, {keyword}){
+        if(state.keywordList.length > 0){
+            for(var i = 0; i<state.keywordList.length; i++){
+                if(state.keywordList[i].keyword == keyword){
+                    state.keywordList.splice(i, 1);
+                    break;
+                }
+            }
+        }
+    },
   },
   actions: {
     FetchData({commit}, params){
@@ -68,6 +78,9 @@ export default{
          }, (err) => {
              console.log("FetchItem error:", err)           
         })
+    },
+    RemoveKeyword({commit}, keyword){
+        commit('UnArchiveKeyword', {keyword})
     },
     SaveSelectedItem({commit}, selectedItem){
         commit('SetSelectedItem', {selectedItem})

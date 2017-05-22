@@ -25,7 +25,10 @@ export default {
                 });
                 return floats[0];
             }
+        },
+        // format to currency
+        formatPrice: function(n, currency) {
+            return currency + " " + n.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, "$1,");
         }
-
     }
 }
