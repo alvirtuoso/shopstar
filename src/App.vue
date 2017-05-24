@@ -11,7 +11,7 @@
 
         <div class="navbar-collapse collapse" id="navbar5">
             <div class="input-group w-50">
-                <input id="search-input"  type="text" class="form-control" @keyup.enter="search" v-model="keyword" placeholder="Search">
+                <input id="search-input"  type="text" ref="search" class="form-control" v-model="keyword" placeholder="Search">
                 <span class="input-group-btn">
                 <button class="btn btn-outline-warning" v-on:click="search" type="button">GO</button>
               </span>
@@ -30,10 +30,11 @@
 </template>
 
 <script>
-
+//  @keyup.enter="search"
 import Mixin from './helpers/mixin.js'
 import { mapState } from 'vuex'
-
+import {store} from './main.js'
+import {router} from './main.js'
 export default {
   name: 'app',
   mixins: [Mixin],
@@ -42,34 +43,25 @@ export default {
   ]),
   mounted(){
     this.searchInput = new AmazonAutocomplete('#search-input'); 
+    this.searchInput.onSelectedWord(word => {this.keyword = word; this.search()});
+    // console.log('sear', this.searchInput._input);
   },
   props:{
     items:[]
   },
   data: function(){
     return{
-      // itemList: [],
-      searchList: this.$store.state.keywordList, // used to hold search keywords for the "search history" feature
+      // itemList: this.$store.state.itemList,
+      // searchList: this.$store.state.keywordList, // used to hold search keywords for the "search history" feature
       keyword: '',
       searchInput: null
     }
   },
   methods: {
    search: function(event){
-      var id = this.guid();
-
-      this.keyword = this.keyword.replace(/[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/gi, '');
-      this.$store.dispatch('FetchData', {keyword: this.keyword, page: 1});
-      this.$store.dispatch('UpdateKeyword', this.keyword)
-      this.$store.dispatch('SaveKeywordToArchive', {keyword: this.keyword, id: id})
-      this.$store.dispatch('SetActivePage', 1);
-      this.$localStorage.set('searchedWords', this.searchList);
-      this.$router.push({ path: 'search'});
-    },
-    onSelectedWord: function(){
-      //Log the selected word to the console
-      this.searchInput.onSelectedWord(word => console.log(`searching for ${word}...`));
-      console.log('searchInput', this.searchInput)
+      var keysearch = this.keyword.replace(/[`~!@#$%^&*()_|+=?;:'",.<>\{\}\[\]\\\/]/gi, '');
+      this.searchInput._input.nextElementSibling.style.display = 'none'
+      this.$store.dispatch('FetchData', {keyword: keysearch, page: 1});
     }
   }
 }
@@ -86,6 +78,9 @@ export default {
 /* Words container */
 .ac__inner{
     background: #fafafa;
+}
+.ac__container{
+  z-index:1;
 }
 
 /* Individual word element */

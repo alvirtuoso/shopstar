@@ -98,7 +98,7 @@ export const router = new Router({
     }
   ]
 })
-const store = new Vuex.Store(VuexStore);
+export const store = new Vuex.Store(VuexStore);
 
 // sync(store, router); 
 

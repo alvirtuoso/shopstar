@@ -247,7 +247,7 @@ export default {
   min-height: 50px;
   max-width: 110px;
   padding: 3px; 
-  color: #fff;
+  color: #000;
   -webkit-transition: background .3s ease;
           transition: background .3s ease; }
   .add-to-cart:hover, .like:hover {

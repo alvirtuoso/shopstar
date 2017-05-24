@@ -26,3 +26,8 @@ psrank = Bestseller taking into consideration projected sales
 </div>
 
 <router-link :to="{ name: 'detail', params: { selectedItem: item }}">
+
+    SetFound: function(state, { result }){
+        state.found = result;
+    },
+    

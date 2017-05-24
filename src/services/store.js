@@ -1,6 +1,8 @@
 import axios from 'axios'
 import { ITEMS_URI, ITEM_URI } from '../services/Constants'
 import {router} from '../main';
+import mixin from '../helpers/mixin'
+
 export default{
   state: {
     item: {},
@@ -8,11 +10,15 @@ export default{
     keywordList:[],
     keyword: '',
     currentPage: 1,
+    found: false,
     selectedItem: {}
   },
   mutations: {
     SetItemList: function(state, { list }){
         state.itemList = list
+    },
+    SetFound: function(state, { result }){
+        state.found = result;
     },
     SetItem: function(state, { item }){
         state.item = item
@@ -25,23 +31,23 @@ export default{
     },
     SetSelectedItem: function(state, { selectedItem }){
         state.selectedItem = selectedItem;
-        console.log('Setselecteditem store', state.selectedItem)
     },
     SetSelectedItemAndGo: function(state, { selectedItem }){
         state.selectedItem = selectedItem
     },
-    ArchiveKeyword: function(state, { wordAndId }){
+    ArchiveKeyword: function(state, { keyword }){
         var exists = false;
         if(state.keywordList.length > 0){
             for (var i = 0; i < state.keywordList.length; i++){
-                if(state.keywordList[i].keyword == wordAndId.keyword){
+                if(state.keywordList[i].keyword == keyword){
                     exists = true;
                     break;
                 }
             }
         }
         if(!exists){
-            state.keywordList.push(wordAndId)
+            var id = mixin.methods.guid();
+            state.keywordList.push({keyword: keyword, id: id})
         }
     },
     UnArchiveKeyword: function(state, {keyword}){
@@ -57,10 +63,17 @@ export default{
   },
   actions: {
     FetchData({commit}, params){
+        // console.log('url', ITEMS_URI + params.keyword + `/` + params.page.toString())
         axios.get(ITEMS_URI + params.keyword + `/` + params.page.toString()).then(resp => {
-          if(resp.status == 200 && resp.data != 'server error'){
+          if(resp.status == 200 && (typeof resp.data == "object")){
                 commit('SetItemList', {list: resp.data})
-           }
+                if(params.page == 1){
+                    commit('SetKeyword', {keyword: params.keyword})
+                    commit('ArchiveKeyword', {keyword: params.keyword})
+                    commit('SetCurrentPage', {pageNumber: params.page})
+                    router.push('search')
+                }
+            }
          }, (err) => {
              console.log("FetchData error:", err)
          });
@@ -68,16 +81,17 @@ export default{
     },
     FetchItem({commit}, asin){
         axios.get(ITEM_URI + asin).then(resp => {
-           if(resp.status == 200 && resp.data != 'server error'){
-            //    console.log('hiFetchItem', resp.data)
-                // commit('SetItem', {item: resp.data})
+           if(resp.status == 200 && (typeof resp.data == "object")){
                 commit('SetSelectedItemAndGo', {selectedItem: resp.data})
                 // Go to detail comp
                 router.push('detail')
            }
          }, (err) => {
-             console.log("FetchItem error:", err)           
+             console.log("FetchItem error:", err)
         })
+    },
+    SetFoundData({commit}, hasFound){
+        commit('SetFound', {hasFound})
     },
     RemoveKeyword({commit}, keyword){
         commit('UnArchiveKeyword', {keyword})

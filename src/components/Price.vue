@@ -32,7 +32,9 @@ export default{
 <style scoped>
 .strike-price{
   text-decoration: line-through; 
-  color:#000; font-weight: normal
+  color:#000; 
+  font-weight: normal;
+  font-size: smaller;
 }
 .price-display{
     color:#900;

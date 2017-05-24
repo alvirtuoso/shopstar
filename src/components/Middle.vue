@@ -109,7 +109,6 @@ export default {
         this.scrollToTop(1000);
       },
       onViewItemDetail: function(item){
-        console.log('Mid vue itemselected', item)
          this.$store.dispatch('FetchItem', item.asin)
       },
       scrollToTop(scrollDuration) {

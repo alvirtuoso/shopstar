@@ -23,7 +23,7 @@
         data(){
             return {
                 msg: 'Hellow World of testing',
-                searchList: this.$store.state.keywordList,
+                // searchList: this.$store.state.keywordList,
                 active: false,
                 unArchiveOnly: false
             }
@@ -41,6 +41,11 @@
                 this.unArchiveOnly = true;
                 // Dispatch removeKeyword action
                 this.$store.dispatch('RemoveKeyword', keyword);
+            }
+        },
+        computed:{
+            searchList: function(){
+                return this.$store.state.keywordList
             }
         }
     }

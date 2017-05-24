@@ -28,7 +28,8 @@ export default {
         },
         // format to currency
         formatPrice: function(n, currency) {
-            return currency + " " + n.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, "$1,");
+            if(n && currency)
+                return currency +  " " + n.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, "$1,");
         }
     }
 }
