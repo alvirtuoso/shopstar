@@ -34,7 +34,7 @@ export default{
   text-decoration: line-through; 
   color:#000; 
   font-weight: normal;
-  font-size: smaller;
+  font-size: medium; 
 }
 .price-display{
     color:#900;

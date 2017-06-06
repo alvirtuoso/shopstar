@@ -1,7 +1,7 @@
 <template>
 <div class="row">
 
-  <div class="col-sm-3" v-for="item in itemList">
+  <div class="col-sm-3" v-for="item in $store.state.itemList">
     <div class="card">
         <img class="card-img-top" :src= "item.urlMediumImage" :alt="item.title">
         <div class="card-block padding-5">

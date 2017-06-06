@@ -7,18 +7,38 @@ export default{
   state: {
     item: {},
     itemList:[],
+    cartItems: [],
     keywordList:[],
     keyword: '',
     currentPage: 1,
-    found: false,
+    loading: false,
+    error: '',
     selectedItem: {}
   },
   mutations: {
     SetItemList: function(state, { list }){
         state.itemList = list
     },
-    SetFound: function(state, { result }){
-        state.found = result;
+    SetCartItems: function(state, { params }){
+        if(params.action === 'add'){
+            state.cartItems.push(params.item)
+        }
+        else if(params.action == 'remove'){
+            var items = state.cartItems.filter(function(el) {
+                return el.item.OfferListingId !== params.item.OfferListingId;
+            });
+            state.cartItems = items;
+        }
+        else
+        {
+            
+        }
+    },
+    SetLoading: function(state, result){
+        state.loading = result;
+    },
+    SetError: function(state, result){
+        state.error = result;
     },
     SetItem: function(state, { item }){
         state.item = item
@@ -63,35 +83,52 @@ export default{
   },
   actions: {
     FetchData({commit}, params){
-        // console.log('url', ITEMS_URI + params.keyword + `/` + params.page.toString())
         axios.get(ITEMS_URI + params.keyword + `/` + params.page.toString()).then(resp => {
           if(resp.status == 200 && (typeof resp.data == "object")){
+                commit('SetLoading', false)
                 commit('SetItemList', {list: resp.data})
+                
+                // Work on the same keyword during pagination or selecting item.
                 if(params.page == 1){
                     commit('SetKeyword', {keyword: params.keyword})
                     commit('ArchiveKeyword', {keyword: params.keyword})
                     commit('SetCurrentPage', {pageNumber: params.page})
-                    router.push('search')
                 }
+            }else{
+                // Search 0 result
+                commit('SetLoading', false)
+                commit('SetItemList', {list: []})
+                commit('SetKeyword', {keyword: params.keyword})
             }
-         }, (err) => {
+        }, (err) => {
+            commit('SetLoading', false)
+            commit('SetError', 'Network Error occurred')
              console.log("FetchData error:", err)
          });
 
     },
+    UpdateCartItems({commit}, params){
+        commit('SetCartItems', {params:params})
+    },
     FetchItem({commit}, asin){
         axios.get(ITEM_URI + asin).then(resp => {
            if(resp.status == 200 && (typeof resp.data == "object")){
+                commit('SetLoading', false)
                 commit('SetSelectedItemAndGo', {selectedItem: resp.data})
                 // Go to detail comp
                 router.push('detail')
            }
+           commit('SetLoading', false)
          }, (err) => {
+             commit('SetLoading', false)
              console.log("FetchItem error:", err)
         })
     },
-    SetFoundData({commit}, hasFound){
-        commit('SetFound', {hasFound})
+    SetLoadingFlag({commit}, loading){
+        commit('SetLoading', loading)
+    },
+    ClearError({commit}){
+         commit('SetError', '')
     },
     RemoveKeyword({commit}, keyword){
         commit('UnArchiveKeyword', {keyword})

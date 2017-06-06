@@ -17,7 +17,7 @@
 </template>
 
 <script>
-
+ // This component lists the Search History, which contains entered searched words
     export default{
         name: 'left',
         data(){
@@ -32,6 +32,7 @@
         methods:{
             search(keyword){
                 if(!this.unArchiveOnly){
+                     this.$store.dispatch('SetLoadingFlag', true)
                     this.$store.dispatch('FetchData', {keyword: keyword , page: 1});
                     this.$store.dispatch('UpdateKeyword', keyword);
                     this.$store.dispatch('SetActivePage', 1)

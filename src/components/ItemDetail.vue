@@ -1,5 +1,5 @@
 <template>
-<div>
+<div v-if="itemSelected.title"> <!-- no item selected, so don't show this component' -->
     <div class="row">
         <div class="col-md-8">
             <div class="card">
@@ -30,12 +30,13 @@
                                 <ave-review :item="itemSelected" ref="review"></ave-review>
                             </div>
 
-                            <button class="add-to-cart btn btn-success" type="button">add to cart</button>
+                            <!-- <button class="add-to-cart btn" type="button">add to cart</button> -->
+                           
 
                             <br/>
-                            <ul class="nav">
-
+                            <ul class="nav"> 
                                 <social-sharing :url="itemSelected.urlItemLink" inline-template>
+
                                 <div>
                                     <network network="facebook">
                                         <icon name="facebook-square" color="#3B5998" cursor="pointer" scale="1.75"></icon>
@@ -68,6 +69,7 @@
 </div>
 </template>
 <script>
+// This component is the detail page of the selected item. Contains pictures, features, reviews.
 export default {
     name: 'item-detail',
     mounted(){
@@ -238,21 +240,6 @@ export default {
   border-radius: 2px; }
   .color:first-of-type {
     margin-left: 20px; }
-
-.add-to-cart, .like {
-  background: #ff9f1a;
-  border: none;
-  font-size: 12px;
-  text-transform: UPPERCASE;
-  min-height: 50px;
-  max-width: 110px;
-  padding: 3px; 
-  color: #000;
-  -webkit-transition: background .3s ease;
-          transition: background .3s ease; }
-  .add-to-cart:hover, .like:hover {
-    background: #b36800;
-    color: #fff; }
 
 .not-available {
   text-align: center;

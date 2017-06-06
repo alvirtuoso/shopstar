@@ -1,3 +1,9 @@
+*************** User Identity in Asp.net Core **************
+You can create new project using 
+    dotnet new mvc --auth Individual 
+command and then copy identity-related code to your project.
+
+
 **************** Regex ***************************
 // matches "n or nn or nnnnn customer reviews" regex
 /[0-9]{1,9}\s(customer reviews)\b/g

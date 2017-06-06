@@ -21,6 +21,8 @@ import VueLocalStorage from 'vue-localstorage';
 import Router from 'vue-router';
 
 import Test from './components/Test';
+import AddToCart from './components/AddToCart'
+import CartItems from './components/CartItems'
 import CardList from './components/CardList';
 import AveReview from './components/AveReview';
 import ItemDetail from './components/ItemDetail';
@@ -30,10 +32,15 @@ import Right from './components/Right'
 import Middle from './components/Middle'
 import Price from './components/Price'
 import ItemTabs from './components/ItemTabs'
+import GridView from './components/GridView'
+import Ellipsis from './components/Ellipsis'
+import About from './components/About'
 
 import Icon from 'vue-awesome/components/Icon'
-
+import ProgressiveImage from 'progressive-image/dist/vue'
+import VueProgressiveImage from 'vue-progressive-image'
 import StarRating from 'vue-star-rating'
+import PulseLoader from 'vue-spinner/src/PulseLoader.vue'
 
 import 'vue-awesome/icons/facebook-square'
 import 'vue-awesome/icons/google-plus-square'
@@ -41,18 +48,26 @@ import 'vue-awesome/icons/pinterest-square'
 import 'vue-awesome/icons/twitter-square'
 import 'vue-awesome/icons/star'
 import 'vue-awesome/icons/star-half'
+import 'vue-awesome/icons/th-large'
+import 'vue-awesome/icons/bars'
+
 var SocialSharing = require('vue-social-sharing');
 
 Vue.config.productionTip = false;
 
 Vue.component('star-rating', StarRating);
+Vue.component('pulse-loader', PulseLoader);
+
 Vue.use(VueLocalStorage);
 Vue.use(Vuex)
 Vue.use(Router);
 Vue.use(VueRx);
 Vue.use(BootstrapVue);
 Vue.use(SocialSharing);
-
+Vue.use(VueProgressiveImage)
+Vue.use(ProgressiveImage, {
+  removePreview: true
+});
 Vue.component('test', Test);
 Vue.component('app', App);
 Vue.component('bottom', Bottom)      // global registration
@@ -65,6 +80,11 @@ Vue.component('icon', Icon);
 Vue.component('item-detail', ItemDetail);
 Vue.component('price', Price);
 Vue.component('item-tabs', ItemTabs);
+Vue.component('grid-view', GridView);
+Vue.component('ellipsis', Ellipsis);
+Vue.component('add-to-cart', AddToCart);
+Vue.component('cart-items', CartItems);
+Vue.component('about', About);
 
 Vue.use(VueLazyload, {
   preLoad: 1.3,
@@ -94,7 +114,13 @@ export const router = new Router({
       path: '/bottom', component: Bottom
     },
     {
-      path: '/test', component: Test
+      path: '/about', component: About
+    },
+    {
+      path: '/cart', component: CartItems
+    },    
+    {
+      path: '/test', component: AddToCart
     }
   ]
 })

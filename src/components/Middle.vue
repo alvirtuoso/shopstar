@@ -3,11 +3,43 @@
   <div class="row">
     <left></left>  
     <div class="col-xs-12 col-md-8 bootstrap snippets">
-        <div  v-for="(item, index) in itemList" class="product-content product-wrap clearfix">
+        <div v-if="noSearchResult">
+          <p> Your search <span class="searched-keyword">"{{this.$store.state.keyword}}"</span>  did not match any products.</p>
+          <p class="no-result"> Try something like </p>
+          <ul>
+            <li>Using more general terms</li>
+            <li>Checking your spelling</li>
+          </ul>
+        </div>
+
+        <!-- ******************** List View Icons ******************* -->
+        <div v-if="itemList.length > 0" class="row note-header">
+
+            <div class="col-md-4">1-{{itemList.length}} results for <span class="searched-keyword">"{{this.$store.state.keyword}}"</span></div>
+            <div class="col-md-4 offset-md-4 text-right">
+                <span class="mr-2" @click="isActive = !isActive"><icon name="bars" :color="viewColor.listView" cursor="pointer" scale="1.5"></icon></span>
+                <span @click="isActive = !isActive"><icon name="th-large" :color="viewColor.gridView" cursor="pointer" scale="1.5"></icon></span>
+            </div>
+
+        </div>
+       <!--  ***************** end of List View icons  ******************* -->
+
+        <!-- **************** 'Grid' view ******************************** -->
+        
+        <grid-view v-show="view.grid"></grid-view>
+
+        <!-- **************** end of Grid View *************************** -->
+
+        <!-- **** 'List' view **** -->
+        <!-- Do not show item with empty OfferListingId, which is required for adding item to cart & also means it has price. An itme price will show NA -->
+        <div v-show="view.list"  v-for="(item, index) in itemList" v-if="item.offerListingId.length != 0" class="product-content product-wrap clearfix">
             <div class="row">
                 <div class="col-md-5 col-sm-12 col-xs-12">
                 <div @click="onViewItemDetail(item)" class="product-image curso"> 
-                    <img :src= "item.urlLargeImage" alt="No Image Available" class="img-responsive"> 
+                  <img :src= "item.urlLargeImage" alt="No Image Available" class="img-responsive mx-auto d-block list-img">  
+                   <!--  <progressive-img :src="item.urlLargeImage" /> 840dd6e
+                   <img class="preview" v-progressive="'/static/img/cube.840dd6e.gif'" :src="item.urlLargeImage"/> -->
+                  
                 </div>
                 </div>
                 <div class="col-md-7 col-sm-12 col-xs-12">
@@ -32,26 +64,28 @@
                   </div>
                   <div class="row">
                       <div class="col-md-6 col-sm-6 col-xs-6"> 
-                        <a href="javascript:void(0);" class="btn orange-color">Add to cart</a>
+                         <add-to-cart :item="item"></add-to-cart>
                       </div>
                       <div class="col-md-6 col-sm-6 col-xs-6">
                         <div class="rating">
-                                    <social-sharing :url="item.urlItemLink" inline-template>
-                                    <div>
-                                        <network network="facebook">
-                                            <icon name="facebook-square" color="#3B5998" cursor="pointer" scale="2"></icon>
-                                        </network>
-                                        <network network="googleplus">
-                                        <icon name="google-plus-square" color="#DD4B39" cursor="pointer" scale="2"></icon>
-                                        </network>
-                                        <network network="pinterest">
-                                        <icon name="pinterest-square" color="#CC2127" cursor="pointer" scale="2"></icon>
-                                        </network>
-                                        <network network="twitter">
-                                        <icon name="twitter-square" color="#55ACEE" cursor="pointer" scale="2"></icon>
-                                        </network>
-                                    </div>
-                                    </social-sharing>
+
+                            <social-sharing :url="item.urlItemLink" inline-template>
+                            <div>
+                                <network network="facebook">
+                                    <icon name="facebook-square" color="#3B5998" cursor="pointer" scale="2"></icon>
+                                </network>
+                                <network network="googleplus">
+                                <icon name="google-plus-square" color="#DD4B39" cursor="pointer" scale="2"></icon>
+                                </network>
+                                <network network="pinterest">
+                                <icon name="pinterest-square" color="#CC2127" cursor="pointer" scale="2"></icon>
+                                </network>
+                                <network network="twitter">
+                                <icon name="twitter-square" color="#55ACEE" cursor="pointer" scale="2"></icon>
+                                </network>
+                            </div>
+                            </social-sharing>
+
                         </div>
                       </div>
                   </div>
@@ -60,12 +94,13 @@
               </div>
             </div>
         </div>
-
+       <!-- ************* ENd of List view ************** -->
 
     </div>
   </div> 
 
   <div v-if="itemList.length > 1" class="row justify-content-center">
+   <!-- amazon api only returns 10 items per search and up to 5pages, so that's 50 total -->
       <b-pagination size="md" v-on:input="pageChanged" :total-rows="50" v-model="currentPage" :per-page="10">
       </b-pagination>
   </div>
@@ -74,21 +109,28 @@
 </template>
 
 <script> 
-  //   <div class="row justify-content-center">
-  //   <b-pagination size="md" v-on:input="pageChanged" :total-rows="50" v-model="currentPage" :per-page="10">
-  //   </b-pagination>
-  // </div>
-// <infinite-loading :on-infinite="onInfinite" ref="infiniteLoading"></infinite-loading>
-// import InfiniteLoading from 'vue-infinite-loading';
+// This component lists the search results.
+import Mixin from '../helpers/mixin.js'
+
 export default {
   name: 'middle',
   // components: {
   //   InfiniteLoading,
   // },
+  mixins:[Mixin],
   data () {
     return {
       currentPage: this.$store.state.currentPage,
-      itemIndex: 0
+      itemIndex: 0,
+      noSearchResult: false,
+      isActive: true
+    //   isLoading: false
+    }
+  },
+  mounted(){
+    this.hasSearchResult = false;
+    if(this.itemList.length > 0){
+        this.noSearchResult = true;
     }
   },
   computed:{
@@ -97,34 +139,55 @@ export default {
     },
     aveStars: function(){
       return '0'
+    },
+    viewColor: function(){
+        var c = {listView: '#f0ad4e', gridView: '#757575'}
+        if(this.isActive){
+            c.listView = '#f0ad4e'
+            c.gridView = '#757575'
+        }
+        else
+        {
+            c.listView = '#757575'
+            c.gridView = '#f0ad4e'
+        }
+        return c
+    },
+    view: function(){
+        var view = {grid: false, list: true}
+        if(this.isActive){
+            view.grid = false
+            view.list = true
+        }else{
+            view.grid = true
+            view.list = false
+        }
+        return view
     }
   },
   updated(){
     this.currentPage = this.$store.state.currentPage
+    if(this.itemList.length > 0){
+        this.noSearchResult = false;
+    }else this.noSearchResult = true;
   },
   methods: {
       pageChanged: function() {
+        this.$store.dispatch('SetLoadingFlag', true)
         this.$store.dispatch('FetchData', {keyword: this.$store.state.keyword, page: this.currentPage})
         this.$store.dispatch('SetActivePage', this.currentPage)
         this.scrollToTop(1000);
       },
       onViewItemDetail: function(item){
+           this.$store.dispatch('SetLoadingFlag', true)
          this.$store.dispatch('FetchItem', item.asin)
       },
-      scrollToTop(scrollDuration) {
-          var cosParameter = window.scrollY / 2,
-              scrollCount = 0,
-              oldTimestamp = performance.now();
-          function step (newTimestamp) {
-              scrollCount += Math.PI / (scrollDuration / (newTimestamp - oldTimestamp));
-              if (scrollCount >= Math.PI) window.scrollTo(0, 0);
-              if (window.scrollY === 0) return;
-              window.scrollTo(0, Math.round(cosParameter + cosParameter * Math.cos(scrollCount)));
-              oldTimestamp = newTimestamp;
-              window.requestAnimationFrame(step);
-          }
-          window.requestAnimationFrame(step);
-      }
+    //   onViewClicked: function(){
+    //       // Toggles color for the view buttons
+    //       this.isActive = !this.isActive
+
+    //       // 
+    //   }
 
 
   }
@@ -133,13 +196,32 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 
-<style scoped>
+<style lang="scss" scoped>
+
+.resize{
+    height: 30px;
+    padding: 5px 15px;
+}
+.no-result{
+  font-weight: 700!important;
+      font-size: 13px!important;
+    line-height: 19px!important;
+}
+.searched-keyword{
+    font-weight: 700;
+      font-size: 15px;
+}
 .prime{
   color: #167ac6;
   font-size: 15px;
 }
-img{
-  height: 200px;
+.list-img{
+  max-height: 300px;
+  max-width: 320px;
+}
+.grid-img{
+    max-height: 200px;
+    max-width: 200px;
 }
 .orange-color{
   background-color:#FFCA28;
@@ -159,28 +241,7 @@ img{
     text-decoration:underline;
     color:#ff9f1a;
   }
-.title-collapse {
-  font-weight: 500;
-  height: 40px;
-  overflow: hidden;
-  position: relative;
-  line-height: 1.2em;
-  margin-bottom: 1em;
-}
-.title-collapse:after {
-  // content: '...';
-  position: absolute;
-  bottom: 0;
-  right: 5px;
-  padding: 0 1.2em;
-  background: inherit;
-}
-.title-collapse span:after {
-  content: '\0000a0';
-  position: absolute;
-  z-index: 1;
 
-}
 
 .product-content {
     border: 2px solid #dfe5e9;

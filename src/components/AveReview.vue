@@ -41,8 +41,11 @@ import {REVIEWS} from '../services/Constants'
         }
     }
 </script>
-<<style scoped>
+<style scoped>
 .star-rating{
 
+}
+.rating-text{
+    margin-top: 1px;
 }
 </style>
