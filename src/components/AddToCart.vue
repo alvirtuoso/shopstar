@@ -8,7 +8,11 @@ export default{
     props:['item'],
     methods:{
         onAdd: function(){
-            var cartItem = {title: this.item.title, price:this.item.price, OfferListingId: this.item.offerListingId, quantity:1}
+            var cartItem = {
+                item: this.item,
+                OfferListingId: this.item.offerListingId, 
+                quantity:1
+            }
             this.$store.dispatch('UpdateCartItems', {action:'add', item: cartItem})
             router.push('cart')
         }

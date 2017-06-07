@@ -23,15 +23,18 @@ export default{
         if(params.action === 'add'){
             state.cartItems.push(params.item)
         }
-        else if(params.action == 'remove'){
-            var items = state.cartItems.filter(function(el) {
-                return el.item.OfferListingId !== params.item.OfferListingId;
-            });
-            state.cartItems = items;
-        }
-        else
+        else if(params.action == 'update')
         {
-            
+            state.cartItems[params.index].quantity = params.item.quantity
+        }
+        else{  // params.action == 'remove'
+        console.log('remove sotre')
+            for(var i=0; i < state.cartItems.length; i++) {
+                if(state.cartItems[i].offerListingId == params.offerListingId)
+                {
+                    state.cartItems.splice(i,1);
+                }
+            }
         }
     },
     SetLoading: function(state, result){
@@ -108,7 +111,7 @@ export default{
 
     },
     UpdateCartItems({commit}, params){
-        commit('SetCartItems', {params:params})
+        commit('SetCartItems', {params})
     },
     FetchItem({commit}, asin){
         axios.get(ITEM_URI + asin).then(resp => {

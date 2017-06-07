@@ -50,6 +50,7 @@ import 'vue-awesome/icons/star'
 import 'vue-awesome/icons/star-half'
 import 'vue-awesome/icons/th-large'
 import 'vue-awesome/icons/bars'
+import 'vue-awesome/icons/backward'
 
 var SocialSharing = require('vue-social-sharing');
 
@@ -107,18 +108,18 @@ export const router = new Router({
         {
           path: 'search',
           component: Middle
-        }
+        },
       ]
     },
+    {
+      path: '/cart', component: CartItems
+    },         
     {
       path: '/bottom', component: Bottom
     },
     {
       path: '/about', component: About
-    },
-    {
-      path: '/cart', component: CartItems
-    },    
+    },   
     {
       path: '/test', component: AddToCart
     }

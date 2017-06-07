@@ -109,7 +109,9 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;
 }
-/* Absolute Center Spinner */
+.bg-gray{
+  background-color: #fafafa;
+}
 .loading {
   position: fixed;
   z-index: 999;

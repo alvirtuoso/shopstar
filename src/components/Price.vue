@@ -1,10 +1,16 @@
 <template>
     <div>
-        <span v-if="item.price > item.displayedPrice && item.displayedPrice != 0" class="price-display">{{displayedPrice}}</span>
+        <span v-if="item.price > item.displayedPrice && item.displayedPrice != 0" v-bind:class="{ 'price-display': !isCart }">{{displayedPrice}}</span>
+        <span v-else v-bind:class="{ 'price-display': !isCart }"> {{price}}</span>
+        <span v-if="!isCart && item.price > item.displayedPrice && item.displayedPrice != 0" class="strike-price">
+            {{price}}
+        </span>    
+    <!--
+        <span v-if="item.price > item.displayedPrice && item.displayedPrice != 0"  class="price-display">{{displayedPrice}}</span>
         <span v-else class="price-display"> {{price}}</span>
         <span v-if="item.price > item.displayedPrice && item.displayedPrice != 0" class="strike-price">
             {{price}}
-        </span>
+        </span> -->
     </div>
 </template>
 <script>
@@ -13,7 +19,7 @@ import Mixin from '../helpers/mixin'
 export default{
         name: 'price',
         mixins: [Mixin],
-        props: ['item'],
+        props: ['item', 'isCart'],
         computed:{
             price: function(){
                 return this.formatPrice(this.item.price, this.item.currencySign)
@@ -37,6 +43,11 @@ export default{
   font-size: medium; 
 }
 .price-display{
+    color:#900;
+    font-weight:bold;
+    font-size:17px;
+}
+.pricey{
     color:#900;
     font-weight:bold;
     font-size:17px;
